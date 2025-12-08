@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Skinny Fortunate Crane</title>
+    <meta property="og:title" content="Skinny Fortunate Crane" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}pre {  white-space: normal;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 1rem;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: undefined;
+        text-transform: undefined;
+        letter-spacing: normal;
+        line-height: 1.55;
+        color: var(--color-on-surface);
+        background: var(--color-surface);
+
+        fill: var(--color-on-surface);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./index.css" rel="stylesheet" />
+
+      <div class="home-container1">
+        <navigation-wrapper class="navigation-wrapper">
+          <!--Navigation component-->
+          <div class="navigation-container1">
+            <div class="navigation-container2">
+              <div class="navigation-container3">
+                <style>
+                          @keyframes navigationGradientShift {0%,100% {background-position: 0% 50%;}
+                  50% {background-position: 100% 50%;}}
+                </style>
+              </div>
+            </div>
+            <div class="navigation-container4">
+              <div class="navigation-container5">
+                <style>
+                  @media (min-width: 768px) {
+                  .navigation-overlay {
+                    display: none;
+                  }
+                  }
+                  @media (prefers-reduced-motion: reduce) {
+                  .navigation, .navigation-logo, .navigation-toggle, .navigation-link, .navigation-menu, .navigation-cta-button, .navigation-logo-icon {
+                    transition: none;
+                    animation: none;
+                  }
+                  }
+                </style>
+              </div>
+            </div>
+            <div class="navigation-container6">
+              <div class="navigation-container7">
+                <script defer="" data-name="navigation">
+                  document.addEventListener('DOMContentLoaded', function() {
+                    (function(){
+                      const navToggle = document.getElementById("navToggle")
+                      const navMenu = document.getElementById("navMenu")
+                      const mainNavigation = document.getElementById("mainNavigation")
+
+                      let overlay = document.querySelector(".navigation-overlay")
+                      if (!overlay) {
+                        overlay = document.createElement("div")
+                        overlay.className = "navigation-overlay"
+                        overlay.setAttribute("aria-hidden", "true")
+                        document.body.appendChild(overlay)
+                      }
+
+                      function toggleMenu() {
+                        const isExpanded = navToggle.getAttribute("aria-expanded") === "true"
+                        navToggle.setAttribute("aria-expanded", !isExpanded)
+                        navMenu.classList.toggle("navigation-menu-open")
+                        overlay.classList.toggle("navigation-overlay-active")
+
+                        if (!isExpanded) {
+                          document.body.style.overflow = "hidden"
+                        } else {
+                          document.body.style.overflow = ""
+                        }
+                      }
+
+                      function closeMenu() {
+                        navToggle.setAttribute("aria-expanded", "false")
+                        navMenu.classList.remove("navigation-menu-open")
+                        overlay.classList.remove("navigation-overlay-active")
+                        document.body.style.overflow = ""
+                      }
+
+                      navToggle.addEventListener("click", toggleMenu)
+                      overlay.addEventListener("click", closeMenu)
+
+                      const navLinks = navMenu.querySelectorAll(".navigation-link")
+                      navLinks.forEach((link) => {
+                        link.addEventListener("click", () => {
+                          if (window.innerWidth <= 767) {
+                            closeMenu()
+                          }
+                        })
+                      })
+
+                      window.addEventListener("resize", () => {
+                        if (window.innerWidth > 767) {
+                          closeMenu()
+                        }
+                      })
+
+                      let lastScroll = 0
+                      window.addEventListener("scroll", () => {
+                        const currentScroll = window.pageYOffset
+
+                        if (currentScroll <= 0) {
+                          mainNavigation.style.transform = "translateY(0)"
+                          return
+                        }
+
+                        if (currentScroll > lastScroll && currentScroll > 100) {
+                          mainNavigation.style.transform = "translateY(-100%)"
+                        } else {
+                          mainNavigation.style.transform = "translateY(0)"
+                        }
+
+                        lastScroll = currentScroll
+                      })
+
+                      document.addEventListener("keydown", (e) => {
+                        if (
+                          e.key === "Escape" &&
+                          navMenu.classList.contains("navigation-menu-open")
+                        ) {
+                          closeMenu()
+                          navToggle.focus()
+                        }
+                      })
+                    })()
+                  });
+                </script>
+              </div>
+            </div>
+            <nav id="mainNavigation" class="navigation">
+              <div class="navigation-container">
+                <a href="#">
+                  <div aria-label="FitSphere Homepage" class="navigation-logo">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      class="navigation-logo-icon"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"
+                      ></path>
+                    </svg>
+                    <span class="navigation-logo-text">CrossBox</span>
+                  </div>
+                </a>
+                <button
+                  id="navToggle"
+                  aria-label="Toggle navigation menu"
+                  aria-expanded="false"
+                  aria-controls="navMenu"
+                  class="navigation-toggle"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    class="navigation-navigation-toggle-icon1 navigation-toggle-icon-open"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 5h16M4 12h16M4 19h16"
+                    ></path></svg
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    class="navigation-navigation-toggle-icon2"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M18 6L6 18M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+                <div id="navMenu" class="navigation-menu">
+                  <ul class="navigation-list">
+                    <li class="navigation-item">
+                      <a href="programs.html">
+                        <div class="navigation-link"><span>Programs</span></div>
+                      </a>
+                    </li>
+                    <li class="navigation-item">
+                      <a href="classes.html">
+                        <div class="navigation-link"><span>Classes</span></div>
+                      </a>
+                    </li>
+                    <li class="navigation-item">
+                      <a href="trainers.html">
+                        <div class="navigation-link"><span>Trainers</span></div>
+                      </a>
+                    </li>
+                    <li class="navigation-item">
+                      <a href="success-stories.html">
+                        <div class="navigation-link">
+                          <span>Success Stories</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="navigation-item">
+                      <a href="pricing.html">
+                        <div class="navigation-link"><span>Pricing</span></div>
+                      </a>
+                    </li>
+                    <li class="navigation-item">
+                      <a href="contact.html">
+                        <div class="navigation-link"><span>Contact</span></div>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="navigation-cta">
+                    <a href="#join">
+                      <div class="navigation-cta-button btn btn-primary btn-lg">
+                        <span>Join Now</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </navigation-wrapper>
+        <div class="home-container2">
+          <div class="home-container3">
+            <style>
+                      @keyframes heroTitleEntry {from {opacity: 0;
+              transform: translateY(20px) scale(0.95);}
+              to {opacity: 1;
+              transform: translateY(0) scale(1);}}@keyframes heroAccentPulse {0%,100% {opacity: 1;}
+              50% {opacity: 0.85;}}@keyframes heroSubEntry {from {opacity: 0;
+              transform: translateY(15px);}
+              to {opacity: 1;
+              transform: translateY(0);}}@keyframes heroCTAEntry {from {opacity: 0;
+              transform: translateY(10px);}
+              to {opacity: 1;
+              transform: translateY(0);}}@keyframes heroContactEntry {from {opacity: 0;}
+              to {opacity: 1;}}@keyframes heroCardEntry {from {opacity: 0;
+              transform: translateY(20px) translateX(0);}
+              to {opacity: 1;}}@keyframes ctaPulse {0%,100% {transform: scale(1);
+              opacity: 0.15;}
+              50% {transform: scale(1.2);
+              opacity: 0.25;}}@keyframes carouselSlide {0%,30% {transform: translateX(0);}
+              33%,63% {transform: translateX(calc(-100% - var(--spacing-lg)));}
+              66%,96% {transform: translateX(calc(-200% - calc(var(--spacing-lg) * 2)));}
+              100% {transform: translateX(0);}}@keyframes testimonialScroll {from {transform: translateX(0);}
+              to {transform: translateX(calc(-20% - var(--spacing-lg)));}}
+            </style>
+          </div>
+        </div>
+        <div class="home-container4">
+          <div class="home-container5">
+            <style>
+              @media (prefers-reduced-motion: reduce) {
+              * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+              }
+              .hero-track, .testimonials-track {
+                animation: none;
+              }
+              }
+            </style>
+          </div>
+        </div>
+        <div class="home-container6">
+          <div class="home-container7">
+            <script defer="" data-name="FitSphere Homepage">
+              document.addEventListener('DOMContentLoaded', function() {
+                (function(){
+                  // Schedule accordion functionality
+                  const accordionToggle = document.querySelector(".accordion-toggle")
+                  const accordionContent = document.querySelector(".accordion-content")
+
+                  if (accordionToggle && accordionContent) {
+                    accordionToggle.addEventListener("click", function () {
+                      const isExpanded = this.getAttribute("aria-expanded") === "true"
+                      this.setAttribute("aria-expanded", !isExpanded)
+                      accordionContent.setAttribute("aria-hidden", isExpanded)
+                    })
+                  }
+
+                  // Filter tabs functionality
+                  const filterTabs = document.querySelectorAll(".filter-tab")
+
+                  filterTabs.forEach((tab) => {
+                    tab.addEventListener("click", function () {
+                      filterTabs.forEach((t) => {
+                        t.classList.remove("active")
+                        t.setAttribute("aria-selected", "false")
+                      })
+                      this.classList.add("active")
+                      this.setAttribute("aria-selected", "true")
+                    })
+                  })
+
+                  // Quick filter chips toggle
+                  const quickFilterChips = document.querySelectorAll(".quick-filter-chip")
+
+                  quickFilterChips.forEach((chip) => {
+                    chip.addEventListener("click", function () {
+                      this.classList.toggle("active")
+                    })
+                  })
+
+                  // Pause carousel on hover for accessibility
+                  const carouselTrack = document.getElementById("facilities-track")
+
+                  if (carouselTrack) {
+                    carouselTrack.addEventListener("mouseenter", function () {
+                      this.style.animationPlayState = "paused"
+                    })
+
+                    carouselTrack.addEventListener("mouseleave", function () {
+                      this.style.animationPlayState = "running"
+                    })
+                  }
+
+                  // Testimonials carousel pause on hover
+                  const testimonialsTrack = document.querySelector(".testimonials-track")
+
+                  if (testimonialsTrack) {
+                    testimonialsTrack.addEventListener("mouseenter", function () {
+                      this.style.animationPlayState = "paused"
+                    })
+
+                    testimonialsTrack.addEventListener("mouseleave", function () {
+                      this.style.animationPlayState = "running"
+                    })
+                  }
+
+                  // Button click animations
+                  const allButtons = document.querySelectorAll('.btn, button[class*="btn"]')
+
+                  allButtons.forEach((button) => {
+                    button.addEventListener("click", function (e) {
+                      const ripple = document.createElement("span")
+                      const rect = this.getBoundingClientRect()
+                      const size = Math.max(rect.width, rect.height)
+                      const x = e.clientX - rect.left - size / 2
+                      const y = e.clientY - rect.top - size / 2
+
+                      ripple.style.width = ripple.style.height = size + "px"
+                      ripple.style.left = x + "px"
+                      ripple.style.top = y + "px"
+                      ripple.style.position = "absolute"
+                      ripple.style.borderRadius = "50%"
+                      ripple.style.background = "rgba(255, 255, 255, 0.5)"
+                      ripple.style.pointerEvents = "none"
+                      ripple.style.animation = "ripple 0.6s ease-out"
+
+                      this.style.position = "relative"
+                      this.style.overflow = "hidden"
+                      this.appendChild(ripple)
+
+                      setTimeout(() => ripple.remove(), 600)
+                    })
+                  })
+
+                  // Add ripple animation
+                  const style = document.createElement("style")
+                  style.textContent = `
+                  @keyframes ripple {
+                    to {
+                      transform: scale(4);
+                      opacity: 0;
+                    }
+                  }
+                `
+                  document.head.appendChild(style)
+
+                  // Intersection Observer for scroll animations
+                  const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: "0px 0px -50px 0px",
+                  }
+
+                  const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        entry.target.style.opacity = "1"
+                        entry.target.style.transform = "translateY(0)"
+                      }
+                    })
+                  }, observerOptions)
+
+                  // Observe elements for animation
+                  const animateElements = document.querySelectorAll(
+                    ".session-card, .coach-card, .tile, .testimonial-card"
+                  )
+                  animateElements.forEach((el) => {
+                    el.style.opacity = "0"
+                    el.style.transform = "translateY(20px)"
+                    el.style.transition = "opacity 0.6s ease-out, transform 0.6s ease-out"
+                    observer.observe(el)
+                  })
+                })()
+              });
+            </script>
+          </div>
+        </div>
+        <section id="hero-section" role="banner" class="hero-section">
+          <video
+            autoplay="true"
+            muted="true"
+            loop="true"
+            playsinline="true"
+            aria-hidden="true"
+            src="https://videos.pexels.com/video-files/18941351/18941351-hd_720_1280_50fps.mp4"
+            class="hero-video"
+          ></video>
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div class="hero-grid">
+              <div class="hero-main">
+                <h1 class="hero-title">
+                  <span>CrossBox —</span>
+                  <span class="home-hero-title-accent">
+                    Ignite Your Next Level
+                  </span>
+                </h1>
+                <p class="hero-subtitle">
+                  High-energy training, science-backed programming, and a
+                  community that pushes you beyond limits. Fast. Focused.
+                  Fearless.
+                </p>
+                <div class="hero-cta-group">
+                  <button id="hero-cta-main" class="btn btn-primary btn-xl">
+                    START MY TRIAL
+                  </button>
+                  <button
+                    id="hero-cta-secondary"
+                    class="btn btn-outline btn-lg"
+                  >
+                    BOOK A VISIT
+                  </button>
+                </div>
+                <div class="hero-contact">
+                  <a href="tel:555-GET-FIT">
+                    <div aria-label="Call FitSphere" class="hero-contact-item">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                        ></path>
+                      </svg>
+                      <span>555-GET-FIT</span>
+                    </div>
+                  </a>
+                  <a href="mailto:hello@fitsphere.com?subject=">
+                    <div aria-label="Email FitSphere" class="hero-contact-item">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                        >
+                          <path
+                            d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"
+                          ></path>
+                          <rect
+                            width="20"
+                            height="16"
+                            x="2"
+                            y="4"
+                            rx="2"
+                          ></rect>
+                        </g>
+                      </svg>
+                      <span>Message Us</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="hero-cards">
+                <article class="hero-card hero-card-1">
+                  <div class="home-hero-card-image1 hero-card-image"></div>
+                  <div class="hero-card-content">
+                    <h3 class="hero-card-title">HIIT Fury</h3>
+                    <p class="hero-card-meta">45 min • High Intensity</p>
+                    <button class="btn btn-sm btn-accent">Quick Book</button>
+                  </div>
+                </article>
+                <article class="hero-card hero-card-2">
+                  <div class="home-hero-card-image2 hero-card-image"></div>
+                  <div class="hero-card-content">
+                    <h3 class="hero-card-title">Zen Core</h3>
+                    <p class="hero-card-meta">30 min • Recovery</p>
+                    <button class="btn btn-sm btn-accent">Quick Book</button>
+                  </div>
+                </article>
+                <article class="hero-card hero-card-3">
+                  <div class="home-hero-card-image3 hero-card-image"></div>
+                  <div class="hero-card-content">
+                    <h3 class="hero-card-title">Box + Blast</h3>
+                    <p class="hero-card-meta">45 min • Power</p>
+                    <button class="btn btn-sm btn-accent">Quick Book</button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          id="featured-classes"
+          role="region"
+          aria-labelledby="featured-classes-heading"
+          class="featured-classes-section"
+        >
+          <div class="section-header">
+            <h2 id="featured-classes-heading" class="section-title">
+              Featured Classes
+            </h2>
+            <p class="section-subtitle">
+              Ignite your routine with handpicked, high-energy sessions designed
+              to push limits and deliver visible results
+            </p>
+          </div>
+          <div class="featured-grid">
+            <article
+              aria-labelledby="class-hiit-fury"
+              class="featured-card featured-lead"
+            >
+              <div class="home-featured-card-image1 featured-card-image"></div>
+              <div class="featured-card-overlay"></div>
+              <div class="featured-card-content">
+                <div class="featured-badge">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+                    ></path>
+                  </svg>
+                  <span>Most Popular</span>
+                </div>
+                <h3 id="class-hiit-fury" class="featured-card-title">
+                  HIIT Fury
+                </h3>
+                <p class="featured-card-meta">
+                  45 min • Explosive intervals, weighted circuits
+                </p>
+                <p class="featured-card-description">
+                  Burn, build, accelerate. Maximum calorie melt and stamina
+                  gains through metabolic finishers.
+                </p>
+                <button
+                  aria-label="Quick enroll in HIIT Fury"
+                  class="btn btn-primary"
+                >
+                  Quick Enroll
+                </button>
+              </div>
+            </article>
+            <article
+              aria-labelledby="class-power-sculpt"
+              class="featured-card featured-support"
+            >
+              <div class="home-featured-card-image2 featured-card-image"></div>
+              <div class="featured-card-overlay"></div>
+              <div class="featured-card-content">
+                <h3 id="class-power-sculpt" class="featured-card-title">
+                  Power Sculpt
+                </h3>
+                <p class="featured-card-meta">50 min • Strength</p>
+                <p class="featured-card-description">
+                  Compound lifts and sculpting flows to carve lean muscle.
+                </p>
+                <button
+                  aria-label="Quick enroll in Power Sculpt"
+                  class="btn btn-primary btn-sm"
+                >
+                  Quick Enroll
+                </button>
+              </div>
+            </article>
+            <article
+              aria-labelledby="class-cycle-surge"
+              class="featured-card featured-support"
+            >
+              <div class="home-featured-card-image3 featured-card-image"></div>
+              <div class="featured-card-overlay"></div>
+              <div class="featured-card-content">
+                <h3 id="class-cycle-surge" class="featured-card-title">
+                  Cycle Surge
+                </h3>
+                <p class="featured-card-meta">40 min • Cardio</p>
+                <p class="featured-card-description">
+                  Beat-driven climbs and sprint intervals that crush PRs.
+                </p>
+                <button
+                  aria-label="Quick enroll in Cycle Surge"
+                  class="btn btn-primary btn-sm"
+                >
+                  Quick Enroll
+                </button>
+              </div>
+            </article>
+            <article
+              aria-labelledby="class-zen-core"
+              class="featured-card featured-compact"
+            >
+              <div class="home-featured-card-image4 featured-card-image"></div>
+              <div class="featured-card-overlay"></div>
+              <div class="featured-card-content">
+                <h3 id="class-zen-core" class="featured-card-title">
+                  Zen Core Flow
+                </h3>
+                <p class="featured-card-meta">30 min</p>
+                <button
+                  aria-label="Quick enroll in Zen Core Flow"
+                  class="btn btn-sm btn-accent"
+                >
+                  Enroll
+                </button>
+              </div>
+            </article>
+            <article
+              aria-labelledby="class-box-blast"
+              class="featured-card featured-compact"
+            >
+              <div class="home-featured-card-image5 featured-card-image"></div>
+              <div class="featured-card-overlay"></div>
+              <div class="featured-card-content">
+                <h3 id="class-box-blast" class="featured-card-title">
+                  Box + Blast
+                </h3>
+                <p class="featured-card-meta">45 min</p>
+                <button
+                  aria-label="Quick enroll in Box + Blast"
+                  class="btn btn-sm btn-accent"
+                >
+                  Enroll
+                </button>
+              </div>
+            </article>
+            <article
+              aria-labelledby="class-express-burn"
+              class="featured-card featured-compact"
+            >
+              <div class="home-featured-card-image6 featured-card-image"></div>
+              <div class="featured-card-overlay"></div>
+              <div class="featured-card-content">
+                <h3 id="class-express-burn" class="featured-card-title">
+                  Express Burn
+                </h3>
+                <p class="featured-card-meta">20 min</p>
+                <button
+                  aria-label="Quick enroll in Express Burn"
+                  class="btn btn-sm btn-accent"
+                >
+                  Enroll
+                </button>
+              </div>
+            </article>
+          </div>
+          <div class="featured-footer">
+            <p class="featured-footer-text">
+              <span>Need help choosing? Tap</span>
+              <span class="home-text15">Find My Fit</span>
+              <span>to get a recommended class based on your goals.</span>
+            </p>
+            <button class="btn btn-outline">Find My Fit</button>
+          </div>
+        </section>
+        <section
+          id="cta-contact"
+          role="region"
+          aria-labelledby="cta-heading"
+          class="cta-contact-section"
+        >
+          <div class="cta-grid">
+            <div class="cta-panel">
+              <h2 id="cta-heading" class="cta-heading">Ready to Transform?</h2>
+              <p class="cta-subheading">
+                Join FitSphere today and ignite your next-level fitness journey
+              </p>
+              <ul class="cta-benefits">
+                <li class="cta-benefit-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20 6L9 17l-5-5"
+                    ></path>
+                  </svg>
+                  <span>7-day trial with unlimited classes</span>
+                </li>
+                <li class="cta-benefit-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20 6L9 17l-5-5"
+                    ></path>
+                  </svg>
+                  <span>Full facility access and personal goal session</span>
+                </li>
+                <li class="cta-benefit-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20 6L9 17l-5-5"
+                    ></path>
+                  </svg>
+                  <span>Flexible billing and priority booking</span>
+                </li>
+                <li class="cta-benefit-item">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20 6L9 17l-5-5"
+                    ></path>
+                  </svg>
+                  <span>Cancel anytime, no commitment</span>
+                </li>
+              </ul>
+              <div class="cta-actions">
+                <button class="btn btn-primary btn-xl">START MY TRIAL</button>
+                <button class="btn btn-lg btn-secondary">
+                  VIEW MEMBERSHIPS
+                </button>
+              </div>
+            </div>
+            <div class="utility-column">
+              <div class="utility-card">
+                <h3 class="utility-card-title">Contact Us</h3>
+                <div class="utility-links">
+                  <a href="tel:1-800-FIT-SPHR">
+                    <div class="utility-link">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                        ></path>
+                      </svg>
+                      <span>1-800-FIT-SPHR</span>
+                    </div>
+                  </a>
+                  <a href="sms:555-0123">
+                    <div class="utility-link">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092a10 10 0 1 0-4.777-4.719"
+                        ></path>
+                      </svg>
+                      <span>Text JOIN to 555-0123</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="utility-card">
+                <h3 class="utility-card-title">Visit Hours</h3>
+                <p class="utility-card-text">Weekdays: 6am–9pm</p>
+                <p class="utility-card-text">Weekends: 8am–6pm</p>
+              </div>
+              <div class="utility-card">
+                <h3 class="utility-card-title">Corporate Rates</h3>
+                <p class="utility-card-text">Tailored packages available</p>
+                <a href="mailto:teams@fitsphere.com?subject=">
+                  <div class="utility-link-small">
+                    <span>teams@fitsphere.com</span>
+                  </div>
+                </a>
+              </div>
+              <button
+                aria-haspopup="dialog"
+                aria-controls="liveChat"
+                class="live-chat-btn btn btn-sm btn-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092a10 10 0 1 0-4.777-4.719"
+                  ></path>
+                </svg>
+                <span>Live Help</span>
+              </button>
+            </div>
+          </div>
+        </section>
+        <section
+          id="schedule-section"
+          role="region"
+          aria-labelledby="schedule-heading"
+          class="schedule-section"
+        >
+          <div class="schedule-wrapper">
+            <div class="schedule-left">
+              <h2 id="schedule-heading" class="section-title">
+                Today's Highlights
+              </h2>
+              <p class="section-subtitle">
+                Crush your week with dynamic classes that fit your rhythm
+              </p>
+              <div class="session-feed">
+                <article class="session-card">
+                  <div class="session-time"><span>06:00</span></div>
+                  <div class="session-info">
+                    <h3 class="session-title">HIIT Blast</h3>
+                    <p class="session-meta">Studio A</p>
+                    <div class="session-tags">
+                      <span class="session-tag intensity-high">
+                        High Intensity
+                      </span>
+                      <span class="session-tag spots-available">4 spots</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm">Quick Book</button>
+                </article>
+                <article class="session-card">
+                  <div class="session-time"><span>07:30</span></div>
+                  <div class="session-info">
+                    <h3 class="session-title">Power Yoga</h3>
+                    <p class="session-meta">Zen Room</p>
+                    <div class="session-tags">
+                      <span class="session-tag intensity-medium">
+                        Medium Intensity
+                      </span>
+                      <span class="session-tag spots-available">8 spots</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm">Quick Book</button>
+                </article>
+                <article class="session-card">
+                  <div class="session-time"><span>09:00</span></div>
+                  <div class="session-info">
+                    <h3 class="session-title">Strength Circuit</h3>
+                    <p class="session-meta">Main Floor</p>
+                    <div class="session-tags">
+                      <span class="session-tag intensity-high">
+                        High Intensity
+                      </span>
+                      <span class="session-tag spots-available">6 spots</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm">Quick Book</button>
+                </article>
+                <article class="session-card">
+                  <div class="session-time"><span>12:00</span></div>
+                  <div class="session-info">
+                    <h3 class="session-title">Express Spin</h3>
+                    <p class="session-meta">Cycle Loft</p>
+                    <div class="session-tags">
+                      <span class="session-tag intensity-medium">
+                        Medium Intensity
+                      </span>
+                      <span class="session-tag spots-available">10 spots</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm">Quick Book</button>
+                </article>
+                <article class="session-card">
+                  <div class="session-time"><span>17:30</span></div>
+                  <div class="session-info">
+                    <h3 class="session-title">Metabolic Burn</h3>
+                    <p class="session-meta">Studio B</p>
+                    <div class="session-tags">
+                      <span class="session-tag intensity-high">
+                        High Intensity
+                      </span>
+                      <span class="session-tag spots-limited">2 spots</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm">Quick Book</button>
+                </article>
+                <article class="session-card session-sold-out">
+                  <div class="session-time"><span>19:00</span></div>
+                  <div class="session-info">
+                    <h3 class="session-title">Cardio Dance</h3>
+                    <p class="session-meta">Main Floor</p>
+                    <div class="session-tags">
+                      <span class="session-tag sold-out">Sold Out</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-sm">Join Waitlist</button>
+                </article>
+              </div>
+            </div>
+            <div class="schedule-right">
+              <div class="schedule-filters">
+                <h3 class="schedule-filters-title">This Week at a Glance</h3>
+                <div role="tablist" class="filter-tabs">
+                  <button
+                    role="tab"
+                    aria-selected="true"
+                    class="filter-tab active"
+                  >
+                    All
+                  </button>
+                  <button role="tab" aria-selected="false" class="filter-tab">
+                    Strength
+                  </button>
+                  <button role="tab" aria-selected="false" class="filter-tab">
+                    Cardio
+                  </button>
+                  <button role="tab" aria-selected="false" class="filter-tab">
+                    Yoga
+                  </button>
+                  <button role="tab" aria-selected="false" class="filter-tab">
+                    Spin
+                  </button>
+                </div>
+                <div class="quick-filters">
+                  <button class="quick-filter-chip">Beginner</button>
+                  <button class="quick-filter-chip">Intermediate</button>
+                  <button class="quick-filter-chip">Advanced</button>
+                  <button class="quick-filter-chip">Low-Impact</button>
+                </div>
+              </div>
+              <div class="schedule-accordion">
+                <button aria-expanded="false" class="accordion-toggle">
+                  <span>Waitlist &amp; Flex Pass</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m5 12l7-7l7 7m-7 7V5"
+                    ></path>
+                  </svg>
+                </button>
+                <div aria-hidden="true" class="accordion-content">
+                  <p>
+                    Sold out? Join the waitlist instantly. Use Flex Pass to swap
+                    bookings up to 1 hour before class.
+                  </p>
+                </div>
+              </div>
+              <div class="schedule-help">
+                <h4 class="schedule-help-title">Need help choosing?</h4>
+                <p class="schedule-help-text">
+                  Smart Match recommends classes based on your goals and energy
+                  level.
+                </p>
+                <button class="btn btn-accent">Get Recommendations</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          id="trainers-section"
+          role="region"
+          aria-labelledby="trainers-heading"
+          class="trainers-section"
+        >
+          <h2 id="trainers-heading" class="section-title">Meet Our Coaches</h2>
+          <p class="section-subtitle">
+            Elite trainers who blend science, grit, and contagious energy to
+            sculpt transformations
+          </p>
+          <div aria-label="Featured coach" class="lead-coach">
+            <div class="lead-coach-portrait">
+              <img
+                src="https://images.pexels.com/photos/7991651/pexels-photo-7991651.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                alt="Ava Moreno - Strength and Metcon Specialist"
+              />
+            </div>
+            <div class="lead-coach-content">
+              <h3 class="lead-coach-name">Ava "The Catalyst" Moreno</h3>
+              <p class="lead-coach-specialty">Strength + Metcon Specialist</p>
+              <p class="lead-coach-bio">
+                Certified strength coach and former collegiate athlete. Ava
+                builds raw power and metabolic conditioning with bold
+                programming that shatters plateaus and accelerates visible
+                change.
+              </p>
+              <div class="lead-coach-tags">
+                <span class="coach-tag">Strength</span>
+                <span class="coach-tag">HIIT</span>
+                <span class="coach-tag">Programming</span>
+              </div>
+              <button class="btn btn-primary">Book Consultation</button>
+            </div>
+          </div>
+          <div class="roster-grid">
+            <article aria-labelledby="coach-rohan" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/7991634/pexels-photo-7991634.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Rohan Patel"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-rohan" class="coach-name">Rohan Patel</h3>
+                <p class="coach-specialty">Functional Movement</p>
+                <p class="coach-bio">
+                  Movement scientist focused on joint resilience and athletic
+                  longevity. Restore range, fix imbalances, unlock
+                  higher-performance.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Mobility</span>
+                  <span class="coach-tag-small">Recovery</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-maya" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6456168/pexels-photo-6456168.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Maya Chen"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-maya" class="coach-name">Maya Chen</h3>
+                <p class="coach-specialty">HIIT Performance</p>
+                <p class="coach-bio">
+                  Fast-paced, electric group sessions designed to spike energy
+                  and torch calories. Progress-driven drills that create
+                  community heat.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">HIIT</span>
+                  <span class="coach-tag-small">Group</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-diego" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6456177/pexels-photo-6456177.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Diego Ramos"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-diego" class="coach-name">Diego Ramos</h3>
+                <p class="coach-specialty">Boxing &amp; Fight</p>
+                <p class="coach-bio">
+                  Technical striking coach who fuses boxing fundamentals with
+                  conditioning circuits. Sharpen skill, timing, and tenacity.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Boxing</span>
+                  <span class="coach-tag-small">Conditioning</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-lena" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6975543/pexels-photo-6975543.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Lena Brooks"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-lena" class="coach-name">Lena Brooks</h3>
+                <p class="coach-specialty">Recovery Specialist</p>
+                <p class="coach-bio">
+                  Holistic recovery protocols, mobility flows, and breathwork to
+                  amplify gains. Science-backed and deeply revitalizing.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Recovery</span>
+                  <span class="coach-tag-small">Mindfulness</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-alex" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6455759/pexels-photo-6455759.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Alex Stone"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-alex" class="coach-name">Alex Stone</h3>
+                <p class="coach-specialty">Endurance Coach</p>
+                <p class="coach-bio">
+                  Marathon runner turned coach. Build cardiovascular capacity
+                  and mental toughness for long-distance performance.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Cardio</span>
+                  <span class="coach-tag-small">Endurance</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-sam" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6975550/pexels-photo-6975550.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Sam Rivera"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-sam" class="coach-name">Sam Rivera</h3>
+                <p class="coach-specialty">Nutrition &amp; Wellness</p>
+                <p class="coach-bio">
+                  Registered dietitian specializing in performance nutrition.
+                  Custom meal plans that fuel workouts and accelerate recovery.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Nutrition</span>
+                  <span class="coach-tag-small">Wellness</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section
+          id="facilities-section"
+          role="region"
+          aria-labelledby="facilities-heading"
+          class="facilities-section"
+        >
+          <h2 id="facilities-heading" class="section-title">
+            State-of-the-Art Facilities
+          </h2>
+          <p class="section-subtitle">
+            Every corner engineered for power, performance, and transformation
+          </p>
+          <div
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Facilities showcase"
+            class="hero-carousel"
+          >
+            <div id="facilities-track" class="hero-track">
+              <div role="group" aria-label="Training Floor" class="hero-panel">
+                <div class="home-hero-img1 hero-img"></div>
+                <div class="hero-caption-backplate">
+                  <h3 class="hero-title">Training Floor</h3>
+                  <p class="hero-sub">
+                    Heavy-duty rigs, Olympic platforms, turf sprint lanes and
+                    functional zones engineered for power.
+                  </p>
+                </div>
+              </div>
+              <div role="group" aria-label="Recovery Suite" class="hero-panel">
+                <div class="home-hero-img2 hero-img"></div>
+                <div class="hero-caption-backplate">
+                  <h3 class="hero-title">Recovery Suite</h3>
+                  <p class="hero-sub">
+                    Infrared saunas, cold-plunge, compression therapy to
+                    accelerate recovery and keep you moving stronger.
+                  </p>
+                </div>
+              </div>
+              <div role="group" aria-label="Cardio Loft" class="hero-panel">
+                <div class="home-hero-img3 hero-img"></div>
+                <div class="hero-caption-backplate">
+                  <h3 class="hero-title">Skyline Cardio Loft</h3>
+                  <p class="hero-sub">
+                    Stadium-grade treadmills, assault bikes and immersive LED
+                    walls that turn every run into a performance.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="masonry">
+            <div class="tile tile-1">
+              <div class="home-tile-image1 tile-image"></div>
+              <div class="tile-content">
+                <h4 class="tile-title">Strength Lab</h4>
+                <p class="tile-description">
+                  Calibrated plates and bespoke free-weight stations for
+                  precision programming.
+                </p>
+              </div>
+            </div>
+            <div class="tile tile-2">
+              <div class="home-tile-image2 tile-image"></div>
+              <div class="tile-content">
+                <h4 class="tile-title">Group Studio</h4>
+                <p class="tile-description">
+                  Mirror-backed studios with pro sound and performance lighting
+                  for electric classes.
+                </p>
+              </div>
+            </div>
+            <div class="tile tile-3">
+              <div class="home-tile-image3 tile-image"></div>
+              <div class="tile-content">
+                <h4 class="tile-title">Performance Bar</h4>
+                <p class="tile-description">
+                  Post-workout shakes and custom fuel blends crafted by sports
+                  nutritionists.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="facilities-cta">
+            <button class="btn btn-primary btn-lg">Virtual Tour</button>
+            <button class="btn btn-outline btn-lg">360 Walkthrough</button>
+          </div>
+        </section>
+        <section
+          id="testimonials-section"
+          role="region"
+          aria-labelledby="testimonials-heading"
+          class="testimonials-section"
+        >
+          <h2 id="testimonials-heading" class="section-title">
+            Member Success Stories
+          </h2>
+          <p class="section-subtitle">
+            Real transformations. Real people. Real results.
+          </p>
+          <div class="testimonials-grid">
+            <div class="featured-testimonial">
+              <div class="testimonial-quote-mark">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"
+                  ></path>
+                </svg>
+              </div>
+              <blockquote class="testimonial-quote">
+                FitSphere changed everything. Down 30 pounds, stronger than
+                ever, and part of a crew that pushes me every session. The
+                energy here is contagious — I show up excited and leave
+                unstoppable.
+              </blockquote>
+              <cite class="testimonial-author">
+                Maya R., Marathoner-in-Training
+              </cite>
+              <div class="testimonial-metrics">
+                <div class="metric">
+                  <span class="metric-value">30lbs</span>
+                  <span class="metric-label">Lost</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-value">6mo</span>
+                  <span class="metric-label">Member</span>
+                </div>
+                <div class="metric">
+                  <span class="metric-value">5x/wk</span>
+                  <span class="metric-label">Training</span>
+                </div>
+              </div>
+            </div>
+            <div class="testimonials-utility">
+              <div class="utility-badge">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978m7-7.318v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978M18 9h1.5a1 1 0 0 0 0-5H18M4 22h16"
+                    ></path>
+                    <path
+                      d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm0 0H4.5a1 1 0 0 1 0-5H6"
+                    ></path>
+                  </g>
+                </svg>
+                <p class="utility-badge-text">98% Member Satisfaction</p>
+              </div>
+              <div class="utility-stat">
+                <span class="utility-stat-value">2,500+</span>
+                <span class="utility-stat-label">Transformations</span>
+              </div>
+              <div class="utility-stat">
+                <span class="utility-stat-value">4.9/5</span>
+                <span class="utility-stat-label">Average Rating</span>
+              </div>
+            </div>
+          </div>
+          <div
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Testimonials"
+            class="testimonials-carousel"
+          >
+            <div class="testimonials-track">
+              <article class="testimonial-card">
+                <blockquote class="testimonial-card-quote">
+                  From HIIT to recovery mobility, the coaches built a plan that
+                  transformed my body and my confidence. The classes are
+                  electric.
+                </blockquote>
+                <cite class="testimonial-card-author">
+                  Jordan T., Strength Athlete
+                </cite>
+              </article>
+              <article class="testimonial-card">
+                <blockquote class="testimonial-card-quote">
+                  I thought gyms were intimidating until FitSphere. The
+                  instructors meet you where you are and elevate you fast. My
+                  posture, stamina, and mindset are all next level.
+                </blockquote>
+                <cite class="testimonial-card-author">
+                  Priya S., Busy Professional
+                </cite>
+              </article>
+              <article class="testimonial-card">
+                <blockquote class="testimonial-card-quote">
+                  Six months of consistent training and SmartCycle classes — I
+                  gained lean muscle, dropped fat, and finally enjoy working
+                  out.
+                </blockquote>
+                <cite class="testimonial-card-author">
+                  Marcus L., Weekend Warrior
+                </cite>
+              </article>
+              <article class="testimonial-card">
+                <blockquote class="testimonial-card-quote">
+                  FitSphere's atmosphere is bold, vibrant, and real. Group
+                  classes feel like a celebration of progress. I've made
+                  friends, hit PRs, and signed up for a year.
+                </blockquote>
+                <cite class="testimonial-card-author">
+                  Elena K., Community Leader
+                </cite>
+              </article>
+              <article class="testimonial-card">
+                <blockquote class="testimonial-card-quote">
+                  What impressed me most was the follow-through. Personalized
+                  coaching, clear progress tracking, and the hype from trainers
+                  when you hit milestones.
+                </blockquote>
+                <cite class="testimonial-card-author">
+                  Carlos M., Goal-Crusher
+                </cite>
+              </article>
+            </div>
+          </div>
+        </section>
+        <footer-wrapper class="footer-wrapper">
+          <!--Footer component-->
+          <div class="footer-container1">
+            <div class="footer-container2">
+              <div class="footer-container3">
+                <style>
+                          @keyframes footer-shape-float {0%,100% {transform: translate(0, 0) rotate(0deg) scale(1);}
+                  33% {transform: translate(30px, -30px) rotate(120deg) scale(1.1);}
+                  66% {transform: translate(-20px, 20px) rotate(240deg) scale(0.9);}}@keyframes footer-logo-pulse {0%,100% {transform: rotate(5deg) scale(1.1);}
+                  50% {transform: rotate(5deg) scale(1.2);}}@keyframes footer-newsletter-gradient {0% {background-position: 0% 0%;}
+                  100% {background-position: 200% 0%;}}@keyframes footer-scroll-bounce {0%,100% {transform: translateY(-4px) scale(1.1);}
+                  50% {transform: translateY(-8px) scale(1.1);}}
+                </style>
+              </div>
+            </div>
+            <div class="footer-container4">
+              <div class="footer-container5">
+                <style>
+                  @media (prefers-reduced-motion: reduce) {
+                  .footer-shape, .footer-logo-icon, .footer-social-link, .footer-link, .footer-newsletter-button, .footer-scroll-top {
+                    animation: none;
+                    transition: none;
+                  }
+                  }
+                </style>
+              </div>
+            </div>
+            <div class="footer-container6">
+              <div class="footer-container7">
+                <script defer="" data-name="footer">
+                  document.addEventListener('DOMContentLoaded', function() {
+                    (function(){
+                      const scrollTopButton = document.getElementById("scrollTopButton")
+
+                      // Show/hide scroll to top button based on scroll position
+                      function handleScrollTopVisibility() {
+                        if (window.scrollY > 500) {
+                          scrollTopButton.classList.add("footer-scroll-top-visible")
+                        } else {
+                          scrollTopButton.classList.remove("footer-scroll-top-visible")
+                        }
+                      }
+
+                      // Smooth scroll to top
+                      function scrollToTop() {
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        })
+                      }
+
+                      // Newsletter form submission
+                      const newsletterForm = document.querySelector(".footer-newsletter-form")
+                      if (newsletterForm) {
+                        newsletterForm.addEventListener("submit", function (e) {
+                          e.preventDefault()
+                          const emailInput = this.querySelector(".footer-newsletter-input")
+                          const email = emailInput.value.trim()
+
+                          if (email) {
+                            // Simulate submission success
+                            emailInput.value = ""
+                            emailInput.placeholder = "Thanks for subscribing!"
+
+                            // Reset placeholder after 3 seconds
+                            setTimeout(() => {
+                              emailInput.placeholder = "Your email address"
+                            }, 3000)
+                          }
+                        })
+                      }
+
+                      // Event listeners
+                      window.addEventListener("scroll", handleScrollTopVisibility)
+                      scrollTopButton.addEventListener("click", scrollToTop)
+
+                      // Initial check
+                      handleScrollTopVisibility()
+                    })()
+                  });
+                </script>
+              </div>
+            </div>
+            <footer id="footer" class="footer">
+              <div class="footer-container">
+                <div class="footer-background-shapes">
+                  <div class="footer-shape footer-shape-1"></div>
+                  <div class="footer-shape footer-shape-2"></div>
+                  <div class="footer-shape footer-shape-3"></div>
+                </div>
+                <div class="footer-content">
+                  <div class="footer-column footer-brand-column">
+                    <div class="footer-logo-wrapper">
+                      <div class="footer-logo-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="32"
+                          height="32"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"
+                          ></path>
+                        </svg>
+                      </div>
+                      <h3 class="footer-brand-name">CrossBox</h3>
+                    </div>
+                    <p class="footer-tagline">
+                      Transform Your Body, Elevate Your Life
+                    </p>
+                    <p class="footer-description">
+                      Join the ultimate fitness community where champions are
+                      made. Experience world-class training, cutting-edge
+                      equipment, and unstoppable energy.
+                    </p>
+                    <div class="footer-social">
+                      <h4 class="footer-social-title">Follow the Energy</h4>
+                      <div class="footer-social-links">
+                        <a href="#">
+                          <div aria-label="Facebook" class="footer-social-link">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                              ></path>
+                            </svg>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div
+                            aria-label="Instagram"
+                            class="footer-social-link"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <g
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              >
+                                <rect
+                                  width="20"
+                                  height="20"
+                                  x="2"
+                                  y="2"
+                                  rx="5"
+                                  ry="5"
+                                ></rect>
+                                <path
+                                  d="M16 11.37A4 4 0 1 1 12.63 8A4 4 0 0 1 16 11.37m1.5-4.87h.01"
+                                ></path>
+                              </g>
+                            </svg>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div aria-label="Twitter" class="footer-social-link">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6c2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4c-.9-4.2 4-6.6 7-3.8c1.1 0 3-1.2 3-1.2"
+                              ></path>
+                            </svg>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div aria-label="YouTube" class="footer-social-link">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <g
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              >
+                                <path
+                                  d="M2.5 17a24.1 24.1 0 0 1 0-10a2 2 0 0 1 1.4-1.4a49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10a2 2 0 0 1-1.4 1.4a49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"
+                                ></path>
+                                <path d="m10 15l5-3l-5-3z"></path>
+                              </g>
+                            </svg>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="footer-column footer-links-column">
+                    <h4 class="footer-column-title">Quick Links</h4>
+                    <div class="footer-links-grid">
+                      <ul class="footer-links-list">
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Homepage</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>About Us</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Programs</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Classes</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Trainers</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link">
+                              <span>Membership</span>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="footer-column footer-services-column">
+                    <h4 class="footer-column-title">Our Services</h4>
+                    <ul class="footer-links-list">
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Personal Training</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Group Classes</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Nutrition Plans</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Yoga &amp; Pilates</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Cardio Training</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Strength Training</span>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="footer-column footer-contact-column">
+                    <h4 class="footer-column-title">Get In Touch</h4>
+                    <div class="footer-contact-items">
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            >
+                              <path
+                                d="M17.97 9.304A8 8 0 0 0 2 10c0 4.69 4.887 9.562 7.022 11.468m12.356-4.842a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+                              ></path>
+                              <circle cx="10" cy="10" r="3"></circle>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Location</p>
+                          <p class="footer-contact-value">
+                            123 Fitness Avenue, Gym District, NY 10001
+                          </p>
+                        </div>
+                      </div>
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Phone</p>
+                          <p class="footer-contact-value">(555) 123-4567</p>
+                        </div>
+                      </div>
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            >
+                              <path
+                                d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"
+                              ></path>
+                              <rect
+                                width="20"
+                                height="16"
+                                x="2"
+                                y="4"
+                                rx="2"
+                              ></rect>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Email</p>
+                          <p class="footer-contact-value">info@fitsphere.com</p>
+                        </div>
+                      </div>
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            >
+                              <path d="M12 6v6l4 2"></path>
+                              <circle cx="12" cy="12" r="10"></circle>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Hours</p>
+                          <p class="footer-contact-value">
+                            Mon-Fri: 5AM-11PM | Sat-Sun: 7AM-9PM
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="footer-newsletter">
+                      <h4 class="footer-newsletter-title">Stay Pumped</h4>
+                      <p class="footer-newsletter-desc">
+                        Get fitness tips and exclusive offers
+                      </p>
+                      <form class="footer-newsletter-form">
+                        <input
+                          type="email"
+                          placeholder="Your email address"
+                          required="true"
+                          class="footer-newsletter-input"
+                        />
+                        <button
+                          type="submit"
+                          aria-label="Subscribe"
+                          class="footer-newsletter-button"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="m5 12l7-7l7 7m-7 7V5"
+                            ></path>
+                          </svg>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="footer-bottom">
+                  <div class="footer-bottom-content">
+                    <p class="footer-copyright">
+                      © 2025 FitSphere. All rights reserved. Built for
+                      Champions.
+                    </p>
+                    <div class="footer-legal-links">
+                      <a href="#">
+                        <div class="footer-legal-link">
+                          <span>Privacy Policy</span>
+                        </div>
+                      </a>
+                      <span class="footer-legal-divider">•</span>
+                      <a href="#">
+                        <div class="footer-legal-link">
+                          <span>Terms of Service</span>
+                        </div>
+                      </a>
+                      <span class="footer-legal-divider">•</span>
+                      <a href="#">
+                        <div class="footer-legal-link">
+                          <span>Cookie Policy</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  id="scrollTopButton"
+                  aria-label="Scroll to top"
+                  class="footer-scroll-top"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m5 12l7-7l7 7m-7 7V5"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </footer>
+          </div>
+        </footer-wrapper>
+        
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Contact - FitSphere</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}pre {  white-space: normal;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 1rem;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: undefined;
+        text-transform: undefined;
+        letter-spacing: normal;
+        line-height: 1.55;
+        color: var(--color-on-surface);
+        background: var(--color-surface);
+        fill: var(--color-on-surface);
+      }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" data-tag="font" />
+    <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link href="./index.css" rel="stylesheet" />
+    
+    <style>
+      .contact-section {
+        padding: 120px 40px 80px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        margin-top: 60px;
+      }
+      
+      @media (max-width: 768px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      .contact-info-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+      
+      .contact-info-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--color-accent);
+      }
+      
+      .contact-info-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--color-accent);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      
+      .contact-info-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 10px;
+      }
+      
+      .contact-info-text {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
+      }
+      
+      .contact-form {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 40px;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      .form-label {
+        display: block;
+        color: white;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      
+      .form-input,
+      .form-textarea {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        color: white;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+      
+      .form-input:focus,
+      .form-textarea:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        background: rgba(255, 255, 255, 0.15);
+      }
+      
+      .form-textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+      
+      .form-input::placeholder,
+      .form-textarea::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="home-container1">
+      <!-- Navigation Component -->
+      <nav id="mainNavigation" class="navigation">
+        <div class="navigation-container">
+          <a href="index.html">
+            <div aria-label="FitSphere Homepage" class="navigation-logo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="navigation-logo-icon">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"></path>
+              </svg>
+              <span class="navigation-logo-text">FitSphere</span>
+            </div>
+          </a>
+          <button id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu" class="navigation-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" class="navigation-navigation-toggle-icon1 navigation-toggle-icon-open">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" class="navigation-navigation-toggle-icon2">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+          </button>
+          <div id="navMenu" class="navigation-menu">
+            <ul class="navigation-list">
+              <li class="navigation-item"><a href="programs.html"><div class="navigation-link"><span>Programs</span></div></a></li>
+              <li class="navigation-item"><a href="classes.html"><div class="navigation-link"><span>Classes</span></div></a></li>
+              <li class="navigation-item"><a href="trainers.html"><div class="navigation-link"><span>Trainers</span></div></a></li>
+              <li class="navigation-item"><a href="success-stories.html"><div class="navigation-link"><span>Success Stories</span></div></a></li>
+              <li class="navigation-item"><a href="pricing.html"><div class="navigation-link"><span>Pricing</span></div></a></li>
+              <li class="navigation-item"><a href="contact.html"><div class="navigation-link"><span>Contact</span></div></a></li>
+            </ul>
+            <div class="navigation-cta">
+              <a href="#join"><div class="navigation-cta-button btn btn-primary btn-lg"><span>Join Now</span></div></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Contact Section -->
+      <section class="contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">We're here to help you start your fitness journey</p>
+        
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0"></path>
+                  <circle cx="12" cy="10" r="3" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                </svg>
+              </div>
+              <h3 class="contact-info-title">Location</h3>
+              <p class="contact-info-text">123 Fitness Avenue<br>Gym District, NY 10001</p>
+            </div>
+            
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"></path>
+                </svg>
+              </div>
+              <h3 class="contact-info-title">Phone</h3>
+              <p class="contact-info-text">(555) 123-4567<br>555-GET-FIT</p>
+            </div>
+            
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
+                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  </g>
+                </svg>
+              </div>
+              <h3 class="contact-info-title">Email</h3>
+              <p class="contact-info-text">info@fitsphere.com<br>support@fitsphere.com</p>
+            </div>
+            
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M12 6v6l4 2"></path>
+                    <circle cx="12" cy="12" r="10"></circle>
+                  </g>
+                </svg>
+              </div>
+              <h3 class="contact-info-title">Hours</h3>
+              <p class="contact-info-text">Monday - Friday: 5AM - 11PM<br>Saturday - Sunday: 7AM - 9PM</p>
+            </div>
+          </div>
+          
+          <div class="contact-form">
+            <h3 style="color: white; font-size: 24px; font-weight: 700; margin-bottom: 20px;">Send us a Message</h3>
+            <form>
+              <div class="form-group">
+                <label class="form-label" for="name">Full Name</label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="form-input" placeholder="(555) 123-4567">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" class="form-input" placeholder="I'm interested in...">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label" for="message">Message</label>
+                <textarea id="message" name="message" class="form-textarea" placeholder="Tell us more about your fitness goals..." required></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Component -->
+      <footer id="footer" class="footer">
+        <div class="footer-container">
+          <div class="footer-background-shapes">
+            <div class="footer-shape footer-shape-1"></div>
+            <div class="footer-shape footer-shape-2"></div>
+            <div class="footer-shape footer-shape-3"></div>
+          </div>
+          <div class="footer-content">
+            <div class="footer-column footer-brand-column">
+              <div class="footer-logo-wrapper">
+                <div class="footer-logo-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"></path>
+                  </svg>
+                </div>
+                <h3 class="footer-brand-name">FitSphere</h3>
+              </div>
+              <p class="footer-tagline">Transform Your Body, Elevate Your Life</p>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <div class="footer-bottom-content">
+              <p class="footer-copyright">© 2025 FitSphere. All rights reserved. Built for Champions.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Navigation script
+      document.addEventListener('DOMContentLoaded', function() {
+        const navToggle = document.getElementById("navToggle");
+        const navMenu = document.getElementById("navMenu");
+        
+        let overlay = document.querySelector(".navigation-overlay");
+        if (!overlay) {
+          overlay = document.createElement("div");
+          overlay.className = "navigation-overlay";
+          overlay.setAttribute("aria-hidden", "true");
+          document.body.appendChild(overlay);
+        }
+        
+        function toggleMenu() {
+          const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", !isExpanded);
+          navMenu.classList.toggle("navigation-menu-open");
+          overlay.classList.toggle("navigation-overlay-active");
+          document.body.style.overflow = !isExpanded ? "hidden" : "";
+        }
+        
+        navToggle.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", () => {
+          navToggle.setAttribute("aria-expanded", "false");
+          navMenu.classList.remove("navigation-menu-open");
+          overlay.classList.remove("navigation-overlay-active");
+          document.body.style.overflow = "";
+        });
+      });
+    </script>
+  </body>
+</html>

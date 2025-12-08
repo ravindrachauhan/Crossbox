@@ -1,0 +1,13 @@
+{
+  "name": "skinny-fortunate-crane",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "mysql2": "^3.15.3",
+    "next": "^12.1.10",
+    "parcel-bundler": "^1.6.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "scripts": {}
+}
