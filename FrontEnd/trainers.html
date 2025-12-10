@@ -35,6 +35,451 @@
     <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
     <link rel="stylesheet" href="./style.css" />
     <link href="./index.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-primary: #ff6b35;
+            --color-secondary: #ff8c42;
+            --color-accent: #ff9500;
+            --color-surface: #0a0a0a;
+            --color-surface-dark: #1a1a1a;
+            --color-on-surface: #ffffff;
+            --color-muted: #888888;
+            --color-success: #00ff87;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-surface);
+            color: var(--color-on-surface);
+            line-height: 1.6;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Modal Container */
+        .modal-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Close Button */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 107, 53, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--color-on-surface);
+        }
+
+        /* Modal Header */
+        .modal-header {
+            padding: 40px 40px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .modal-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .modal-logo svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+        }
+
+        .modal-logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .modal-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+            position: relative;
+        }
+
+        /* Modal Body */
+        .modal-body {
+            padding: 40px;
+        }
+
+        /* Form */
+        .join-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-on-surface);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-label .required {
+            color: var(--color-accent);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--color-on-surface);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--color-muted);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m7 10l5 5l5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .form-select option {
+            background: var(--color-surface-dark);
+            color: var(--color-on-surface);
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--color-primary);
+        }
+
+        /* Terms */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255, 149, 0, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 149, 0, 0.2);
+        }
+
+        .terms-checkbox {
+            margin-top: 2px;
+        }
+
+        .terms-label {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .terms-label a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .terms-label a:hover {
+            color: var(--color-secondary);
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-on-surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(0, 255, 135, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 135, 0.2);
+        }
+
+        .benefits-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-success);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .benefit-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .modal-container {
+                border-radius: 16px;
+                max-height: 95vh;
+            }
+
+            .modal-header {
+                padding: 30px 24px 24px;
+            }
+
+            .modal-body {
+                padding: 24px;
+            }
+
+            .modal-title {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-list {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Demo Button */
+        .demo-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .demo-btn:hover {
+            transform: translate(-50%, -50%) translateY(-4px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
+        }
+    </style>
   </head>
   <body>
     <div class="home-container1">
@@ -46,7 +491,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="navigation-logo-icon">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"></path>
               </svg>
-              <span class="navigation-logo-text">FitSphere</span>
+              <span class="navigation-logo-text">Crossbox</span>
             </div>
           </a>
           <button id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu" class="navigation-toggle">
@@ -67,14 +512,20 @@
               <li class="navigation-item"><a href="contact.html"><div class="navigation-link"><span>Contact</span></div></a></li>
             </ul>
             <div class="navigation-cta">
-              <a href="#join"><div class="navigation-cta-button btn btn-primary btn-lg"><span>Join Now</span></div></a>
+              <!-- <a href="#join"><div class="navigation-cta-button btn btn-primary btn-lg"><span>Join Now</span></div></a> -->
+
+              <a href="#" onclick="openModal(); return false;">
+                      <div class="navigation-cta-button btn btn-primary btn-lg">
+                        <span>Join Now</span>
+                      </div>
+                    </a>
             </div>
           </div>
         </div>
       </nav>
 
       <!-- Trainers/Coaches Section -->
-      <section id="roster-section" role="region" aria-labelledby="roster-heading" class="roster-section" style="margin-top: 80px;">
+      <!-- <section id="roster-section" role="region" aria-labelledby="roster-heading" class="roster-section" style="margin-top: 80px;">
         <h2 id="roster-heading" class="section-title">Meet Your Coaches</h2>
         <p class="section-subtitle">Elite trainers dedicated to unlocking your peak performance</p>
         
@@ -192,10 +643,689 @@
             </div>
           </article>
         </div>
-      </section>
+      </section> -->
+
+      <section
+          id="trainers-section"
+          role="region"
+          aria-labelledby="trainers-heading"
+          class="trainers-section"
+        >
+          <h2 id="trainers-heading" class="section-title">Meet Our Coaches</h2>
+          <p class="section-subtitle">
+            Elite trainers who blend science, grit, and contagious energy to
+            sculpt transformations
+          </p>
+          <div aria-label="Featured coach" class="lead-coach">
+            <div class="lead-coach-portrait">
+              <img
+                src="https://images.pexels.com/photos/7991651/pexels-photo-7991651.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                alt="Ava Moreno - Strength and Metcon Specialist"
+              />
+            </div>
+            <div class="lead-coach-content">
+              <h3 class="lead-coach-name">Ava "The Catalyst" Moreno</h3>
+              <p class="lead-coach-specialty">Strength + Metcon Specialist</p>
+              <p class="lead-coach-bio">
+                Certified strength coach and former collegiate athlete. Ava
+                builds raw power and metabolic conditioning with bold
+                programming that shatters plateaus and accelerates visible
+                change.
+              </p>
+              <div class="lead-coach-tags">
+                <span class="coach-tag">Strength</span>
+                <span class="coach-tag">HIIT</span>
+                <span class="coach-tag">Programming</span>
+              </div>
+              <button class="btn btn-primary">Book Consultation</button>
+            </div>
+          </div>
+          <div class="roster-grid">
+            <article aria-labelledby="coach-rohan" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/7991634/pexels-photo-7991634.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Rohan Patel"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-rohan" class="coach-name">Rohan Patel</h3>
+                <p class="coach-specialty">Functional Movement</p>
+                <p class="coach-bio">
+                  Movement scientist focused on joint resilience and athletic
+                  longevity. Restore range, fix imbalances, unlock
+                  higher-performance.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Mobility</span>
+                  <span class="coach-tag-small">Recovery</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-maya" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6456168/pexels-photo-6456168.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Maya Chen"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-maya" class="coach-name">Maya Chen</h3>
+                <p class="coach-specialty">HIIT Performance</p>
+                <p class="coach-bio">
+                  Fast-paced, electric group sessions designed to spike energy
+                  and torch calories. Progress-driven drills that create
+                  community heat.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">HIIT</span>
+                  <span class="coach-tag-small">Group</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-diego" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6456177/pexels-photo-6456177.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Diego Ramos"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-diego" class="coach-name">Diego Ramos</h3>
+                <p class="coach-specialty">Boxing &amp; Fight</p>
+                <p class="coach-bio">
+                  Technical striking coach who fuses boxing fundamentals with
+                  conditioning circuits. Sharpen skill, timing, and tenacity.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Boxing</span>
+                  <span class="coach-tag-small">Conditioning</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-lena" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6975543/pexels-photo-6975543.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Lena Brooks"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-lena" class="coach-name">Lena Brooks</h3>
+                <p class="coach-specialty">Recovery Specialist</p>
+                <p class="coach-bio">
+                  Holistic recovery protocols, mobility flows, and breathwork to
+                  amplify gains. Science-backed and deeply revitalizing.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Recovery</span>
+                  <span class="coach-tag-small">Mindfulness</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-alex" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6455759/pexels-photo-6455759.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Alex Stone"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-alex" class="coach-name">Alex Stone</h3>
+                <p class="coach-specialty">Endurance Coach</p>
+                <p class="coach-bio">
+                  Marathon runner turned coach. Build cardiovascular capacity
+                  and mental toughness for long-distance performance.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Cardio</span>
+                  <span class="coach-tag-small">Endurance</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+            <article aria-labelledby="coach-sam" class="coach-card">
+              <div class="coach-portrait">
+                <img
+                  src="https://images.pexels.com/photos/6975550/pexels-photo-6975550.jpeg?auto=compress&amp;cs=tinysrgb&amp;h=650&amp;w=940"
+                  alt="Sam Rivera"
+                />
+              </div>
+              <div class="coach-content">
+                <h3 id="coach-sam" class="coach-name">Sam Rivera</h3>
+                <p class="coach-specialty">Nutrition &amp; Wellness</p>
+                <p class="coach-bio">
+                  Registered dietitian specializing in performance nutrition.
+                  Custom meal plans that fuel workouts and accelerate recovery.
+                </p>
+                <div class="coach-tags">
+                  <span class="coach-tag-small">Nutrition</span>
+                  <span class="coach-tag-small">Wellness</span>
+                </div>
+                <button class="btn btn-outline btn-sm">Book 1:1</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+         <footer-wrapper class="footer-wrapper">
+          <!--Footer component-->
+          <div class="footer-container1">
+            <div class="footer-container2">
+              <div class="footer-container3">
+                <style>
+                          @keyframes footer-shape-float {0%,100% {transform: translate(0, 0) rotate(0deg) scale(1);}
+                  33% {transform: translate(30px, -30px) rotate(120deg) scale(1.1);}
+                  66% {transform: translate(-20px, 20px) rotate(240deg) scale(0.9);}}@keyframes footer-logo-pulse {0%,100% {transform: rotate(5deg) scale(1.1);}
+                  50% {transform: rotate(5deg) scale(1.2);}}@keyframes footer-newsletter-gradient {0% {background-position: 0% 0%;}
+                  100% {background-position: 200% 0%;}}@keyframes footer-scroll-bounce {0%,100% {transform: translateY(-4px) scale(1.1);}
+                  50% {transform: translateY(-8px) scale(1.1);}}
+                </style>
+              </div>
+            </div>
+            <div class="footer-container4">
+              <div class="footer-container5">
+                <style>
+                  @media (prefers-reduced-motion: reduce) {
+                  .footer-shape, .footer-logo-icon, .footer-social-link, .footer-link, .footer-newsletter-button, .footer-scroll-top {
+                    animation: none;
+                    transition: none;
+                  }
+                  }
+                </style>
+              </div>
+            </div>
+            <div class="footer-container6">
+              <div class="footer-container7">
+                <script defer="" data-name="footer">
+                  document.addEventListener('DOMContentLoaded', function() {
+                    (function(){
+                      const scrollTopButton = document.getElementById("scrollTopButton")
+
+                      // Show/hide scroll to top button based on scroll position
+                      function handleScrollTopVisibility() {
+                        if (window.scrollY > 500) {
+                          scrollTopButton.classList.add("footer-scroll-top-visible")
+                        } else {
+                          scrollTopButton.classList.remove("footer-scroll-top-visible")
+                        }
+                      }
+
+                      // Smooth scroll to top
+                      function scrollToTop() {
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        })
+                      }
+
+                      // Newsletter form submission
+                      const newsletterForm = document.querySelector(".footer-newsletter-form")
+                      if (newsletterForm) {
+                        newsletterForm.addEventListener("submit", function (e) {
+                          e.preventDefault()
+                          const emailInput = this.querySelector(".footer-newsletter-input")
+                          const email = emailInput.value.trim()
+
+                          if (email) {
+                            // Simulate submission success
+                            emailInput.value = ""
+                            emailInput.placeholder = "Thanks for subscribing!"
+
+                            // Reset placeholder after 3 seconds
+                            setTimeout(() => {
+                              emailInput.placeholder = "Your email address"
+                            }, 3000)
+                          }
+                        })
+                      }
+
+                      // Event listeners
+                      window.addEventListener("scroll", handleScrollTopVisibility)
+                      scrollTopButton.addEventListener("click", scrollToTop)
+
+                      // Initial check
+                      handleScrollTopVisibility()
+                    })()
+                  });
+                </script>
+              </div>
+            </div>
+            <footer id="footer" class="footer">
+              <div class="footer-container">
+                <div class="footer-background-shapes">
+                  <div class="footer-shape footer-shape-1"></div>
+                  <div class="footer-shape footer-shape-2"></div>
+                  <div class="footer-shape footer-shape-3"></div>
+                </div>
+                <div class="footer-content">
+                  <div class="footer-column footer-brand-column">
+                    <div class="footer-logo-wrapper">
+                      <div class="footer-logo-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="32"
+                          height="32"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"
+                          ></path>
+                        </svg>
+                      </div>
+                      <h3 class="footer-brand-name">CrossBox</h3>
+                    </div>
+                    <p class="footer-tagline">
+                      Transform Your Body, Elevate Your Life
+                    </p>
+                    <p class="footer-description">
+                      Join the ultimate fitness community where champions are
+                      made. Experience world-class training, cutting-edge
+                      equipment, and unstoppable energy.
+                    </p>
+                    <div class="footer-social">
+                      <h4 class="footer-social-title">Follow the Energy</h4>
+                      <div class="footer-social-links">
+                        <a href="#">
+                          <div aria-label="Facebook" class="footer-social-link">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                              ></path>
+                            </svg>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div
+                            aria-label="Instagram"
+                            class="footer-social-link"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <g
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              >
+                                <rect
+                                  width="20"
+                                  height="20"
+                                  x="2"
+                                  y="2"
+                                  rx="5"
+                                  ry="5"
+                                ></rect>
+                                <path
+                                  d="M16 11.37A4 4 0 1 1 12.63 8A4 4 0 0 1 16 11.37m1.5-4.87h.01"
+                                ></path>
+                              </g>
+                            </svg>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div aria-label="Twitter" class="footer-social-link">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6c2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4c-.9-4.2 4-6.6 7-3.8c1.1 0 3-1.2 3-1.2"
+                              ></path>
+                            </svg>
+                          </div>
+                        </a>
+                        <a href="#">
+                          <div aria-label="YouTube" class="footer-social-link">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                            >
+                              <g
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              >
+                                <path
+                                  d="M2.5 17a24.1 24.1 0 0 1 0-10a2 2 0 0 1 1.4-1.4a49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10a2 2 0 0 1-1.4 1.4a49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"
+                                ></path>
+                                <path d="m10 15l5-3l-5-3z"></path>
+                              </g>
+                            </svg>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="footer-column footer-links-column">
+                    <h4 class="footer-column-title">Quick Links</h4>
+                    <div class="footer-links-grid">
+                      <ul class="footer-links-list">
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Homepage</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>About Us</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Programs</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Classes</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link"><span>Trainers</span></div>
+                          </a>
+                        </li>
+                        <li class="footer-link-item">
+                          <a href="#">
+                            <div class="footer-link">
+                              <span>Membership</span>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="footer-column footer-services-column">
+                    <h4 class="footer-column-title">Our Services</h4>
+                    <ul class="footer-links-list">
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Personal Training</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Group Classes</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Nutrition Plans</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Yoga &amp; Pilates</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Cardio Training</span>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="footer-link-item">
+                        <a href="#">
+                          <div class="footer-link">
+                            <span>Strength Training</span>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="footer-column footer-contact-column">
+                    <h4 class="footer-column-title">Get In Touch</h4>
+                    <div class="footer-contact-items">
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            >
+                              <path
+                                d="M17.97 9.304A8 8 0 0 0 2 10c0 4.69 4.887 9.562 7.022 11.468m12.356-4.842a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
+                              ></path>
+                              <circle cx="10" cy="10" r="3"></circle>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Location</p>
+                          <p class="footer-contact-value">
+                            123 Fitness Avenue, Gym District, NY 10001
+                          </p>
+                        </div>
+                      </div>
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Phone</p>
+                          <p class="footer-contact-value">(555) 123-4567</p>
+                        </div>
+                      </div>
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            >
+                              <path
+                                d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"
+                              ></path>
+                              <rect
+                                width="20"
+                                height="16"
+                                x="2"
+                                y="4"
+                                rx="2"
+                              ></rect>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Email</p>
+                          <p class="footer-contact-value">info@fitsphere.com</p>
+                        </div>
+                      </div>
+                      <div class="footer-contact-item">
+                        <div class="footer-contact-icon">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            >
+                              <path d="M12 6v6l4 2"></path>
+                              <circle cx="12" cy="12" r="10"></circle>
+                            </g>
+                          </svg>
+                        </div>
+                        <div class="footer-contact-text">
+                          <p class="footer-contact-label">Hours</p>
+                          <p class="footer-contact-value">
+                            Mon-Fri: 5AM-11PM | Sat-Sun: 7AM-9PM
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="footer-newsletter">
+                      <h4 class="footer-newsletter-title">Stay Pumped</h4>
+                      <p class="footer-newsletter-desc">
+                        Get fitness tips and exclusive offers
+                      </p>
+                      <form class="footer-newsletter-form">
+                        <input
+                          type="email"
+                          placeholder="Your email address"
+                          required="true"
+                          class="footer-newsletter-input"
+                        />
+                        <button
+                          type="submit"
+                          aria-label="Subscribe"
+                          class="footer-newsletter-button"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="m5 12l7-7l7 7m-7 7V5"
+                            ></path>
+                          </svg>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="footer-bottom">
+                  <div class="footer-bottom-content">
+                    <p class="footer-copyright">
+                      © 2025 FitSphere. All rights reserved. Built for
+                      Champions.
+                    </p>
+                    <div class="footer-legal-links">
+                      <a href="#">
+                        <div class="footer-legal-link">
+                          <span>Privacy Policy</span>
+                        </div>
+                      </a>
+                      <span class="footer-legal-divider">•</span>
+                      <a href="#">
+                        <div class="footer-legal-link">
+                          <span>Terms of Service</span>
+                        </div>
+                      </a>
+                      <span class="footer-legal-divider">•</span>
+                      <a href="#">
+                        <div class="footer-legal-link">
+                          <span>Cookie Policy</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  id="scrollTopButton"
+                  aria-label="Scroll to top"
+                  class="footer-scroll-top"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m5 12l7-7l7 7m-7 7V5"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </footer>
+          </div>
+        </footer-wrapper>
 
       <!-- Footer Component -->
-      <footer id="footer" class="footer">
+      <!-- <footer id="footer" class="footer">
         <div class="footer-container">
           <div class="footer-background-shapes">
             <div class="footer-shape footer-shape-1"></div>
@@ -210,7 +1340,7 @@
                     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"></path>
                   </svg>
                 </div>
-                <h3 class="footer-brand-name">FitSphere</h3>
+                <h3 class="footer-brand-name">Crossbox</h3>
               </div>
               <p class="footer-tagline">Transform Your Body, Elevate Your Life</p>
             </div>
@@ -221,7 +1351,7 @@
             </div>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </div>
 
     <script>
@@ -254,6 +1384,230 @@
           document.body.style.overflow = "";
         });
       });
+    </script>
+
+    <!--Join Now Modal from Here -->
+  <div class="modal-overlay" id="joinModal">
+        <div class="modal-container">
+            <!-- Close Button -->
+            <button class="modal-close" onclick="closeModal()" aria-label="Close modal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="modal-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"/>
+                    </svg>
+                    <span class="modal-logo-text">CrossBox</span>
+                </div>
+                <h2 class="modal-title">Start Your Journey</h2>
+                <p class="modal-subtitle">Join the CrossBox community and transform your fitness</p>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Benefits Section -->
+                <div class="benefits-section">
+                    <div class="benefits-title">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/>
+                        </svg>
+                        What You'll Get
+                    </div>
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m5 12l5 5L20 7"/>
+                            </svg>
+                            Unlimited Classes
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m5 12l5 5L20 7"/>
+                            </svg>
+                            Personal Training
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m5 12l5 5L20 7"/>
+                            </svg>
+                            Nutrition Guidance
+                        </div>
+                        <div class="benefit-item">
+                            <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m5 12l5 5L20 7"/>
+                            </svg>
+                            Community Support
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Join Form -->
+                <form class="join-form" id="joinForm">
+                    <!-- Personal Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                First Name <span class="required">*</span>
+                            </label>
+                            <input type="text" class="form-input" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                Last Name <span class="required">*</span>
+                            </label>
+                            <input type="text" class="form-input" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Email <span class="required">*</span>
+                            </label>
+                            <input type="email" class="form-input" placeholder="john.doe@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                Phone <span class="required">*</span>
+                            </label>
+                            <input type="tel" class="form-input" placeholder="(555) 123-4567" required>
+                        </div>
+                    </div>
+
+                    <!-- Membership Type -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Membership Type <span class="required">*</span>
+                        </label>
+                        <select class="form-select" required>
+                            <option value="">Select a membership plan</option>
+                            <option value="basic">Basic - $49/month</option>
+                            <option value="premium">Premium - $99/month</option>
+                            <option value="elite">Elite - $149/month</option>
+                        </select>
+                    </div>
+
+                    <!-- Fitness Goals -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            What are your fitness goals?
+                        </label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input" value="weight-loss">
+                                Weight Loss
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input" value="muscle-gain">
+                                Muscle Gain
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input" value="endurance">
+                                Improve Endurance
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input" value="flexibility">
+                                Increase Flexibility
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Experience Level -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Experience Level <span class="required">*</span>
+                        </label>
+                        <select class="form-select" required>
+                            <option value="">Select your experience level</option>
+                            <option value="beginner">Beginner - New to fitness</option>
+                            <option value="intermediate">Intermediate - Some experience</option>
+                            <option value="advanced">Advanced - Regular training</option>
+                            <option value="athlete">Athlete - Competitive level</option>
+                        </select>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            Additional Notes (Optional)
+                        </label>
+                        <textarea class="form-textarea" placeholder="Tell us anything else we should know about your fitness journey, medical conditions, or specific requirements..."></textarea>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="terms-group">
+                        <input type="checkbox" id="terms" class="checkbox-input terms-checkbox" required>
+                        <label for="terms" class="terms-label">
+                            I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>. I understand that membership fees are non-refundable and I commit to following gym safety guidelines.
+                        </label>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l5 5L20 7"/>
+                            </svg>
+                            Complete Registration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+      //@ts-nocheck
+        // Modal Functions
+        function openModal() {
+            const modal = document.getElementById('joinModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('joinModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on outside click
+        document.getElementById('joinModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Form Submission
+        document.getElementById('joinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message (customize as needed)
+            alert('Thank you for joining CrossBox! We will contact you shortly to complete your registration.');
+            
+            // Close modal and reset form
+            closeModal();
+            this.reset();
+            
+            // Here you would typically send the form data to your server
+            // Example: fetch('/api/register', { method: 'POST', body: new FormData(this) })
+        });
     </script>
   </body>
 </html>
