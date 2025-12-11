@@ -687,7 +687,8 @@
 }
  
 .btn-sm {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 10px 20px;
+  font-size: 14px;
 }
  
 .btn-lg {

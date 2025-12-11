@@ -58,7 +58,7 @@
       href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
     />
 
-    <!-- <style>
+    <style>
         :root {
             --color-primary: #ff6b35;
             --color-secondary: #ff8c42;
@@ -433,6 +433,7 @@
             gap: 10px;
         }
 
+       
         .benefit-item {
             display: flex;
             align-items: center;
@@ -501,7 +502,7 @@
             transform: translate(-50%, -50%) translateY(-4px);
             box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
         }
-    </style> -->
+    </style>
 
 
   </head>
@@ -1086,8 +1087,9 @@
                 </p>
                 <button
                   aria-label="Quick enroll in HIIT Fury"
-                  class="btn btn-primary"
+                  class="btn btn-primary btn-sm"
                 >
+                
                   Quick Enroll
                 </button>
               </div>
@@ -2690,6 +2692,263 @@
             // Example: fetch('/api/register', { method: 'POST', body: new FormData(this) })
         });
     </script>
+
+<!-- Quick Book Modal -->
+<div id="quickBookModal" class="modal-overlay">
+    <div class="modal-container">
+        <!-- Close Button -->
+        <button class="modal-close" onclick="closeQuickBookModal()" aria-label="Close modal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <div class="modal-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 6v12M9 12l3 3 3-3M6 9l3-3 3 3M15 9l3-3 3 3"/>
+                </svg>
+                <span class="modal-logo-text">CrossBox</span>
+            </div>
+            <h2 class="modal-title">Quick Book Your Slot</h2>
+            <p class="modal-subtitle">Reserve your spot in seconds - we'll handle the rest!</p>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <!-- Quick Benefits Section -->
+            <div class="benefits-section" style="background: rgba(255, 149, 0, 0.05); border-color: rgba(255, 149, 0, 0.2);">
+                <div class="benefits-title" style="color: var(--color-accent);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    Quick Booking Benefits
+                </div>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Instant Confirmation
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Priority Slots
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Free Cancellation
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Reminder Alerts
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Book Form -->
+            <form class="join-form" id="quickBookForm">
+                <!-- Personal Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Full Name <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Phone <span class="required">*</span>
+                        </label>
+                        <input type="tel" class="form-input" placeholder="(555) 123-4567" required>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Email <span class="required">*</span>
+                    </label>
+                    <input type="email" class="form-input" placeholder="john.doe@example.com" required>
+                </div>
+
+                <!-- Class Selection -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Select Class <span class="required">*</span>
+                    </label>
+                    <select class="form-select" required id="classSelect">
+                        <option value="">Choose your class</option>
+                        <option value="hiit-fury">HIIT Fury - 45 min • High Intensity</option>
+                        <option value="zen-core">Zen Core - 30 min • Recovery</option>
+                        <option value="box-blast">Box + Blast - 45 min • Power</option>
+                        <option value="strength-build">Strength Build - 60 min • Muscle</option>
+                        <option value="cardio-burst">Cardio Burst - 30 min • Endurance</option>
+                        <option value="yoga-flow">Yoga Flow - 50 min • Flexibility</option>
+                    </select>
+                </div>
+
+                <!-- Date and Time Selection -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Preferred Date <span class="required">*</span>
+                        </label>
+                        <input type="date" class="form-input" required id="bookingDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Time Slot <span class="required">*</span>
+                        </label>
+                        <select class="form-select" required>
+                            <option value="">Select time</option>
+                            <option value="06:00">6:00 AM - Morning Energy</option>
+                            <option value="08:00">8:00 AM - Rise & Grind</option>
+                            <option value="10:00">10:00 AM - Mid-Morning</option>
+                            <option value="12:00">12:00 PM - Lunch Break</option>
+                            <option value="17:00">5:00 PM - After Work</option>
+                            <option value="18:30">6:30 PM - Evening Peak</option>
+                            <option value="20:00">8:00 PM - Night Session</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Number of Participants -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Number of Participants <span class="required">*</span>
+                    </label>
+                    <select class="form-select" required>
+                        <option value="1">Just me (1 person)</option>
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4 people</option>
+                        <option value="5+">5 or more (Group booking)</option>
+                    </select>
+                </div>
+
+                <!-- Special Requirements -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Special Requirements (Optional)
+                    </label>
+                    <textarea class="form-textarea" placeholder="Any specific requests, injuries we should know about, or equipment preferences..."></textarea>
+                </div>
+
+                <!-- Booking Preferences -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Booking Preferences
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="checkbox-input" value="reminder-sms">
+                            Send me SMS reminder (24 hours before)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="checkbox-input" value="reminder-email">
+                            Send me email reminder with class details
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="checkbox-input" value="waitlist">
+                            Add me to waitlist if slot is full
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="terms-group">
+                    <input type="checkbox" id="bookingTerms" class="checkbox-input terms-checkbox" required>
+                    <label for="bookingTerms" class="terms-label">
+                        I agree to the <a href="#">Booking Terms</a> and <a href="#">Cancellation Policy</a>. I understand that I can cancel up to 2 hours before the class without penalty.
+                    </label>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeQuickBookModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                        Confirm Booking
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Quick Book Modal Functions
+    function openQuickBookModal() {
+        const modal = document.getElementById('quickBookModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Set minimum date to today
+        const dateInput = document.getElementById('bookingDate');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    }
+
+    function closeQuickBookModal() {
+        const modal = document.getElementById('quickBookModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close on outside click
+    document.getElementById('quickBookModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeQuickBookModal();
+        }
+    });
+
+    // Update the existing Escape key handler to close both modals
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+            closeQuickBookModal();
+        }
+    });
+
+    // Quick Book Form Submission
+    document.getElementById('quickBookForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Here you would normally send the data to your backend
+        const formData = new FormData(this);
+        
+        // Show success message
+        alert('🎉 Booking Confirmed! We\'ve sent you a confirmation email with all the details. See you at CrossBox!');
+        
+        // Close modal and reset form
+        closeQuickBookModal();
+        this.reset();
+    });
+
+    // Add event listeners to all Quick Book buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        const quickBookButtons = document.querySelectorAll('.btn-accent, .btn-primary.btn-sm');
+        
+        quickBookButtons.forEach(button => {
+            if (button.textContent.trim() === 'Quick Book') {
+                button.setAttribute('onclick', 'openQuickBookModal(); return false;');
+            }
+        });
+    });
+</script>
 
 
   </body>
