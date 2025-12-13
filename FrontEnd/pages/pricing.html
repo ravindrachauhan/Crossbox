@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Success Stories - FitSphere</title>
+    <title>Pricing - FitSphere</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
@@ -33,460 +33,104 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" data-tag="font" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" data-tag="font" />
     <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
-    <link rel="stylesheet" href="./style.css" />
-    <link href="./index.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="../style.css" />
+    <link href="../index.css" rel="stylesheet" />
+    
     <style>
-        :root {
-            --color-primary: #ff6b35;
-            --color-secondary: #ff8c42;
-            --color-accent: #ff9500;
-            --color-surface: #0a0a0a;
-            --color-surface-dark: #1a1a1a;
-            --color-on-surface: #ffffff;
-            --color-muted: #888888;
-            --color-success: #00ff87;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--color-surface);
-            color: var(--color-on-surface);
-            line-height: 1.6;
-        }
-
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Modal Container */
-        .modal-container {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-            border-radius: 20px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .modal-overlay.active .modal-container {
-            transform: scale(1) translateY(0);
-        }
-
-        /* Close Button */
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 107, 53, 0.2);
-            transform: rotate(90deg);
-        }
-
-        .modal-close svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--color-on-surface);
-        }
-
-        /* Modal Header */
-        .modal-header {
-            padding: 40px 40px 30px;
-            text-align: center;
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            border-radius: 20px 20px 0 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .modal-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .modal-logo svg {
-            width: 40px;
-            height: 40px;
-            stroke: white;
-        }
-
-        .modal-logo-text {
-            font-size: 32px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .modal-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 8px;
-            position: relative;
-        }
-
-        .modal-subtitle {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 400;
-            position: relative;
-        }
-
-        /* Modal Body */
-        .modal-body {
-            padding: 40px;
-        }
-
-        /* Form */
-        .join-form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--color-on-surface);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .form-label .required {
-            color: var(--color-accent);
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: var(--color-on-surface);
-            font-size: 15px;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: var(--color-muted);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m7 10l5 5l5-5'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 20px;
-            padding-right: 40px;
-        }
-
-        .form-select option {
-            background: var(--color-surface-dark);
-            color: var(--color-on-surface);
-        }
-
-        /* Checkbox Group */
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            font-size: 14px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .checkbox-label:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 107, 53, 0.3);
-        }
-
-        .checkbox-input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--color-primary);
-        }
-
-        /* Terms */
-        .terms-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 16px;
-            background: rgba(255, 149, 0, 0.05);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 149, 0, 0.2);
-        }
-
-        .terms-checkbox {
-            margin-top: 2px;
-        }
-
-        .terms-label {
-            font-size: 13px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .terms-label a {
-            color: var(--color-accent);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .terms-label a:hover {
-            color: var(--color-secondary);
-            text-decoration: underline;
-        }
-
-        /* Buttons */
-        .form-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .btn {
-            padding: 16px 32px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--color-on-surface);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* Benefits Section */
-        .benefits-section {
-            margin-bottom: 24px;
-            padding: 20px;
-            background: rgba(0, 255, 135, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 255, 135, 0.2);
-        }
-
-        .benefits-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--color-success);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .benefits-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .benefit-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .benefit-icon {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 640px) {
-            .modal-container {
-                border-radius: 16px;
-                max-height: 95vh;
-            }
-
-            .modal-header {
-                padding: 30px 24px 24px;
-            }
-
-            .modal-body {
-                padding: 24px;
-            }
-
-            .modal-title {
-                font-size: 24px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .benefits-list {
-                grid-template-columns: 1fr;
-            }
-
-            .form-actions {
-                flex-direction: column;
-            }
-        }
-
-        /* Demo Button */
-        .demo-btn {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px 40px;
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .demo-btn:hover {
-            transform: translate(-50%, -50%) translateY(-4px);
-            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
-        }
+      .pricing-section {
+        padding: 120px 40px 80px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 60px;
+      }
+      
+      .pricing-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+        transition: all 0.3s ease;
+      }
+      
+      .pricing-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        border-color: var(--color-accent);
+      }
+      
+      .pricing-card.featured {
+        background: linear-gradient(135deg, rgba(255, 68, 119, 0.1), rgba(138, 43, 226, 0.1));
+        border-color: var(--color-accent);
+        position: relative;
+      }
+      
+      .pricing-badge {
+        position: absolute;
+        top: -15px;
+        right: 30px;
+        background: var(--color-accent);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      
+      .pricing-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: white;
+      }
+      
+      .pricing-price {
+        font-size: 48px;
+        font-weight: 800;
+        color: var(--color-accent);
+        margin: 20px 0;
+      }
+      
+      .pricing-price span {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      
+      .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 30px 0;
+      }
+      
+      .pricing-features li {
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      
+      .pricing-features li::before {
+        content: "✓";
+        color: var(--color-accent);
+        font-weight: bold;
+        font-size: 18px;
+      }
     </style>
+
+  
   </head>
   <body>
     <div class="home-container1">
       <!-- Navigation Component -->
       <nav id="mainNavigation" class="navigation">
         <div class="navigation-container">
-          <a href="index.html">
+          <a href="../index.html">
             <div aria-label="FitSphere Homepage" class="navigation-logo">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="navigation-logo-icon">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"></path>
@@ -524,251 +168,64 @@
         </div>
       </nav>
 
-      <!-- Success Stories/Testimonials Section -->
-      <!-- <section id="testimonials-section" role="region" aria-labelledby="testimonials-heading" class="testimonials-section" style="margin-top: 80px;">
-        <h2 id="testimonials-heading" class="section-title">Member Success Stories</h2>
-        <p class="section-subtitle">Real transformations. Real people. Real results.</p>
+      <!-- Pricing Section -->
+      <section class="pricing-section">
+        <h2 class="section-title">Membership Plans</h2>
+        <p class="section-subtitle">Choose the plan that fits your fitness journey</p>
         
-        <div class="testimonials-grid">
-          <div class="featured-testimonial">
-            <div class="testimonial-quote-mark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"></path>
-              </svg>
-            </div>
-            <blockquote class="testimonial-quote">
-              FitSphere changed everything. Down 30 pounds, stronger than ever, and part of a crew that pushes me every session. The energy here is contagious — I show up excited and leave unstoppable.
-            </blockquote>
-            <cite class="testimonial-author">Maya R., Marathoner-in-Training</cite>
-            <div class="testimonial-metrics">
-              <div class="metric">
-                <span class="metric-value">30lbs</span>
-                <span class="metric-label">Lost</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">6mo</span>
-                <span class="metric-label">Member</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">5x/wk</span>
-                <span class="metric-label">Training</span>
-              </div>
-            </div>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3 class="pricing-title">Starter</h3>
+            <div class="pricing-price">$49<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>Access to all group classes</li>
+              <li>Locker room & showers</li>
+              <li>Free fitness assessment</li>
+              <li>Mobile app access</li>
+              <li>Guest pass (1/month)</li>
+            </ul>
+            <button class="btn btn-outline btn-lg" style="width: 100%;">Get Started</button>
           </div>
           
-          <div class="testimonials-utility">
-            <div class="utility-badge">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                  <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978m7-7.318v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978M18 9h1.5a1 1 0 0 0 0-5H18M4 22h16"></path>
-                  <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm0 0H4.5a1 1 0 0 1 0-5H6"></path>
-                </g>
-              </svg>
-              <p class="utility-badge-text">98% Member Satisfaction</p>
-            </div>
-            <div class="utility-stat">
-              <span class="utility-stat-value">2,500+</span>
-              <span class="utility-stat-label">Transformations</span>
-            </div>
-            <div class="utility-stat">
-              <span class="utility-stat-value">4.9/5</span>
-              <span class="utility-stat-label">Average Rating</span>
-            </div>
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <h3 class="pricing-title">Elite</h3>
+            <div class="pricing-price">$89<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>Everything in Starter</li>
+              <li>Unlimited classes</li>
+              <li>24/7 gym access</li>
+              <li>2 personal training sessions</li>
+              <li>Nutrition consultation</li>
+              <li>Recovery suite access</li>
+              <li>Guest passes (3/month)</li>
+            </ul>
+            <button class="btn btn-primary btn-lg" style="width: 100%;">Start Free Trial</button>
+          </div>
+          
+          <div class="pricing-card">
+            <h3 class="pricing-title">Champion</h3>
+            <div class="pricing-price">$149<span>/month</span></div>
+            <ul class="pricing-features">
+              <li>Everything in Elite</li>
+              <li>Weekly personal training</li>
+              <li>Custom program design</li>
+              <li>Body composition analysis</li>
+              <li>Priority class booking</li>
+              <li>Exclusive workshops</li>
+              <li>Unlimited guest passes</li>
+            </ul>
+            <button class="btn btn-outline btn-lg" style="width: 100%;">Go Champion</button>
           </div>
         </div>
         
-        <div role="region" aria-roledescription="carousel" aria-label="Testimonials" class="testimonials-carousel">
-          <div class="testimonials-track">
-            <article class="testimonial-card">
-              <blockquote class="testimonial-card-quote">
-                From HIIT to recovery mobility, the coaches built a plan that transformed my body and my confidence. The classes are electric.
-              </blockquote>
-              <cite class="testimonial-card-author">Jordan T., Strength Athlete</cite>
-            </article>
-            
-            <article class="testimonial-card">
-              <blockquote class="testimonial-card-quote">
-                I thought gyms were intimidating until FitSphere. The instructors meet you where you are and elevate you fast. My posture, stamina, and mindset are all next level.
-              </blockquote>
-              <cite class="testimonial-card-author">Priya S., Busy Professional</cite>
-            </article>
-            
-            <article class="testimonial-card">
-              <blockquote class="testimonial-card-quote">
-                Six months of consistent training and SmartCycle classes — I gained lean muscle, dropped fat, and finally enjoy working out.
-              </blockquote>
-              <cite class="testimonial-card-author">Marcus L., Weekend Warrior</cite>
-            </article>
-            
-            <article class="testimonial-card">
-              <blockquote class="testimonial-card-quote">
-                FitSphere's atmosphere is bold, vibrant, and real. Group classes feel like a celebration of progress. I've made friends, hit PRs, and signed up for a year.
-              </blockquote>
-              <cite class="testimonial-card-author">Elena K., Community Leader</cite>
-            </article>
-            
-            <article class="testimonial-card">
-              <blockquote class="testimonial-card-quote">
-                What impressed me most was the follow-through. Personalized coaching, clear progress tracking, and the hype from trainers when you hit milestones.
-              </blockquote>
-              <cite class="testimonial-card-author">Carlos M., Goal-Crusher</cite>
-            </article>
-          </div>
+        <div style="text-align: center; margin-top: 60px; color: rgba(255, 255, 255, 0.7);">
+          <p>All plans include a 7-day money-back guarantee. No hidden fees.</p>
+          <p style="margin-top: 10px;">Corporate and student discounts available. Contact us for details.</p>
         </div>
-      </section> -->
+      </section>
 
-      <section
-          id="testimonials-section"
-          role="region"
-          aria-labelledby="testimonials-heading"
-          class="testimonials-section"
-        >
-          <h2 id="testimonials-heading" class="section-title">
-            Member Success Stories
-          </h2>
-          <p class="section-subtitle">
-            Real transformations. Real people. Real results.
-          </p>
-          <div class="testimonials-grid">
-            <div class="featured-testimonial">
-              <div class="testimonial-quote-mark">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"
-                  ></path>
-                </svg>
-              </div>
-              <blockquote class="testimonial-quote">
-                FitSphere changed everything. Down 30 pounds, stronger than
-                ever, and part of a crew that pushes me every session. The
-                energy here is contagious — I show up excited and leave
-                unstoppable.
-              </blockquote>
-              <cite class="testimonial-author">
-                Maya R., Marathoner-in-Training
-              </cite>
-              <div class="testimonial-metrics">
-                <div class="metric">
-                  <span class="metric-value">30lbs</span>
-                  <span class="metric-label">Lost</span>
-                </div>
-                <div class="metric">
-                  <span class="metric-value">6mo</span>
-                  <span class="metric-label">Member</span>
-                </div>
-                <div class="metric">
-                  <span class="metric-value">5x/wk</span>
-                  <span class="metric-label">Training</span>
-                </div>
-              </div>
-            </div>
-            <div class="testimonials-utility">
-              <div class="utility-badge">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                >
-                  <g
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978m7-7.318v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978M18 9h1.5a1 1 0 0 0 0-5H18M4 22h16"
-                    ></path>
-                    <path
-                      d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm0 0H4.5a1 1 0 0 1 0-5H6"
-                    ></path>
-                  </g>
-                </svg>
-                <p class="utility-badge-text">98% Member Satisfaction</p>
-              </div>
-              <div class="utility-stat">
-                <span class="utility-stat-value">2,500+</span>
-                <span class="utility-stat-label">Transformations</span>
-              </div>
-              <div class="utility-stat">
-                <span class="utility-stat-value">4.9/5</span>
-                <span class="utility-stat-label">Average Rating</span>
-              </div>
-            </div>
-          </div>
-          <div
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Testimonials"
-            class="testimonials-carousel"
-          >
-            <div class="testimonials-track">
-              <article class="testimonial-card">
-                <blockquote class="testimonial-card-quote">
-                  From HIIT to recovery mobility, the coaches built a plan that
-                  transformed my body and my confidence. The classes are
-                  electric.
-                </blockquote>
-                <cite class="testimonial-card-author">
-                  Jordan T., Strength Athlete
-                </cite>
-              </article>
-              <article class="testimonial-card">
-                <blockquote class="testimonial-card-quote">
-                  I thought gyms were intimidating until FitSphere. The
-                  instructors meet you where you are and elevate you fast. My
-                  posture, stamina, and mindset are all next level.
-                </blockquote>
-                <cite class="testimonial-card-author">
-                  Priya S., Busy Professional
-                </cite>
-              </article>
-              <article class="testimonial-card">
-                <blockquote class="testimonial-card-quote">
-                  Six months of consistent training and SmartCycle classes — I
-                  gained lean muscle, dropped fat, and finally enjoy working
-                  out.
-                </blockquote>
-                <cite class="testimonial-card-author">
-                  Marcus L., Weekend Warrior
-                </cite>
-              </article>
-              <article class="testimonial-card">
-                <blockquote class="testimonial-card-quote">
-                  FitSphere's atmosphere is bold, vibrant, and real. Group
-                  classes feel like a celebration of progress. I've made
-                  friends, hit PRs, and signed up for a year.
-                </blockquote>
-                <cite class="testimonial-card-author">
-                  Elena K., Community Leader
-                </cite>
-              </article>
-              <article class="testimonial-card">
-                <blockquote class="testimonial-card-quote">
-                  What impressed me most was the follow-through. Personalized
-                  coaching, clear progress tracking, and the hype from trainers
-                  when you hit milestones.
-                </blockquote>
-                <cite class="testimonial-card-author">
-                  Carlos M., Goal-Crusher
-                </cite>
-              </article>
-            </div>
-          </div>
-        </section>
-
-         <footer-wrapper class="footer-wrapper">
+       <footer-wrapper class="footer-wrapper">
           <!--Footer component-->
           <div class="footer-container1">
             <div class="footer-container2">
