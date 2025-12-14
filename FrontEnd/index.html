@@ -2666,6 +2666,30 @@
             document.body.style.overflow = '';
         }
 
+        function openQuickBookModal() {
+        const modal = document.getElementById('quickBookModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeQuickBookModal() {
+        const modal = document.getElementById('quickBookModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function openEnrollModal() {
+        const modal = document.getElementById('enrollModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+     function closeEnrollModal() {
+        const modal = document.getElementById('enrollModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
         // Close on outside click
         document.getElementById('joinModal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -2673,27 +2697,24 @@
             }
         });
 
+         document.getElementById('quickBookModal').addEventListener('click', function(e) {
+        if (e.target === this) closeQuickBookModal();
+    });
+    
+    document.getElementById('enrollModal').addEventListener('click', function(e) {
+        if (e.target === this) closeEnrollModal();
+    });
+
         // Close on Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
+                closeQuickBookModal();
+                closeEnrollModal();
             }
         });
 
-        // Form Submission
-        document.getElementById('joinForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show success message (customize as needed)
-            alert('Thank you for joining CrossBox! We will contact you shortly to complete your registration.');
-            
-            // Close modal and reset form
-            closeModal();
-            this.reset();
-            
-            // Here you would typically send the form data to your server
-            // Example: fetch('/api/register', { method: 'POST', body: new FormData(this) })
-        });
+      
     </script>
 
 <!-- Quick Book Modal -->
@@ -3253,6 +3274,8 @@
     });
 </script>
 
+<script src="js/modals.js"></script>
 
-  </body>
+</body>
+
 </html>

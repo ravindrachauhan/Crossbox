@@ -25,15 +25,46 @@ app.use((req, res, next) => {
 // Welcome route
 app.get('/', (req, res) => {
     res.json({
-        message: 'Welcome to Customer Management API!',
+        message: 'Welcome to CrossBox Fitness API!',
+        version: '1.0.0',
         endpoints: {
-            customers: {
-                getAll: 'GET /api/customers',
-                getOne: 'GET /api/customers/:id',
-                searchByCity: 'GET /api/customers/city/:city',
-                create: 'POST /api/customers',
-                update: 'PUT /api/customers/:id',
-                delete: 'DELETE /api/customers/:id'
+            users: {
+                getAll: 'GET /api/users',
+                getOne: 'GET /api/users/:id',
+                searchByMembership: 'GET /api/users/membership/:type',
+                searchByStatus: 'GET /api/users/status/:status (active/inactive)',
+                create: 'POST /api/users',
+                update: 'PUT /api/users/:id',
+                delete: 'DELETE /api/users/:id'
+            },
+            trainers: {
+                getAll: 'GET /api/trainers',
+                getOne: 'GET /api/trainers/:id',
+                searchBySpecialization: 'GET /api/trainers/specialization/:spec',
+                searchByStatus: 'GET /api/trainers/status/:status (active/inactive)',
+                create: 'POST /api/trainers',
+                update: 'PUT /api/trainers/:id',
+                delete: 'DELETE /api/trainers/:id'
+            },
+            plans: {
+                getAll: 'GET /api/plans',
+                getOne: 'GET /api/plans/:id',
+                searchByLevel: 'GET /api/plans/level/:level',
+                searchByStatus: 'GET /api/plans/status/:status (active/inactive)',
+                create: 'POST /api/plans',
+                update: 'PUT /api/plans/:id',
+                delete: 'DELETE /api/plans/:id'
+            },
+            subscriptions: {
+                getAll: 'GET /api/subscriptions',
+                getOne: 'GET /api/subscriptions/:id',
+                searchByMember: 'GET /api/subscriptions/member/:memberId',
+                searchByPlan: 'GET /api/subscriptions/plan/:planId',
+                searchByPaymentStatus: 'GET /api/subscriptions/payment/:status',
+                searchByMembershipStatus: 'GET /api/subscriptions/memstatus/:status',
+                create: 'POST /api/subscriptions',
+                update: 'PUT /api/subscriptions/:id',
+                delete: 'DELETE /api/subscriptions/:id'
             }
         }
     });
@@ -55,6 +86,6 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log('=================================');
     console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📍 http://localhost:${PORT}`);
+    console.log(`🔗 http://localhost:${PORT}`);
     console.log('=================================');
 });
