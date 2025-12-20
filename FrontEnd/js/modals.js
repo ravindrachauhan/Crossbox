@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Validate required fields
                 if (!data.firstName || !data.lastName || !data.email || !data.phone || !data.membershipType || !data.experienceLevel) {
-                    alert('Please fill in all required fields');
+                    showErrorMessage('Missing Information', 'Please fill in all required fields');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalText;
                     return;
@@ -96,50 +96,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ==================== QUICK BOOK MODAL SUBMISSION (FIXED) ====================
+// ==================== QUICK BOOK MODAL SUBMISSION (COMPLETELY FIXED) ====================
 document.addEventListener('DOMContentLoaded', function() {
     const quickBookForm = document.getElementById('quickBookForm');
     
     if (quickBookForm) {
-        quickBookForm.addEventListener('submit', async function(e) {
+        // Remove any existing listeners to avoid duplicates
+        const newForm = quickBookForm.cloneNode(true);
+        quickBookForm.parentNode.replaceChild(newForm, quickBookForm);
+        
+        newForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            e.stopPropagation();
             
             console.log('📝 Quick Book form submitted');
             
             // Show loading state
-            const submitBtn = quickBookForm.querySelector('button[type="submit"]');
+            const submitBtn = newForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Booking...';
             
             try {
-                // Get all inputs from the Quick Book form
-                const allInputs = quickBookForm.querySelectorAll('.form-input');
-                const allSelects = quickBookForm.querySelectorAll('.form-select');
+                console.log('🔍 QUICK BOOK - DIRECT VALUE EXTRACTION');
                 
-                console.log('🔍 Found inputs:', allInputs.length);
-                console.log('🔍 Found selects:', allSelects.length);
+                // Get values DIRECTLY - no arrays, no loops, just direct access
+                const fullName = newForm.querySelector('input[type="text"]').value.trim();
+                const phone = newForm.querySelector('input[type="tel"]').value.trim();
+                const email = newForm.querySelector('input[type="email"]').value.trim();
+                const bookingDate = newForm.querySelector('input[type="date"]').value;
                 
-                // Quick Book Modal Field Order (from HTML):
-                // Input 0: Full Name (text, placeholder="John Doe")
-                // Input 1: Phone (tel, placeholder="(555) 123-4567") 
-                // Input 2: Email (email, placeholder="john.doe@example.com")
-                // Input 3: Booking Date (date, id="bookingDate")
-                // Select 0: Class Selection (id="classSelect")
-                // Select 1: Time Slot
-                // Select 2: Number of Participants
+                // Get selects by their exact position in the form
+                const allSelects = newForm.querySelectorAll('select');
+                const className = allSelects[0].value; // First select = Class
+                const timeSlot = allSelects[1].value;  // Second select = Time
+                const numParticipants = parseInt(allSelects[2].value) || 1; // Third select = Participants
                 
-                const fullName = allInputs[0].value.trim();
-                const phone = allInputs[1].value.trim();
-                const email = allInputs[2].value.trim();
-                const bookingDate = allInputs[3].value;
-                const className = allSelects[0].value;
-                const timeSlot = allSelects[1].value;
-                const numParticipants = parseInt(allSelects[2].value) || 1;
-                const specialRequirements = quickBookForm.querySelector('.form-textarea') ? quickBookForm.querySelector('.form-textarea').value.trim() : '';
+                // Get textarea
+                const specialRequirements = newForm.querySelector('textarea').value.trim();
                 
-                // Get checkbox preferences
-                const checkboxes = quickBookForm.querySelectorAll('.checkbox-input:not(#bookingTerms)');
+                // Get checkboxes (not including the terms checkbox)
+                const checkboxes = newForm.querySelectorAll('.checkbox-input:not(#bookingTerms)');
                 const reminderSMS = checkboxes[0] ? checkboxes[0].checked : false;
                 const reminderEmail = checkboxes[1] ? checkboxes[1].checked : false;
                 const waitlist = checkboxes[2] ? checkboxes[2].checked : false;
@@ -162,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Validate required fields
                 if (!fullName || !phone || !email || !className || !bookingDate || !timeSlot) {
-                    alert('Please fill in all required fields');
+                    showErrorMessage('Missing Information', 'Please fill in all required fields');
                     console.log('❌ Validation failed:', {
                         fullName: !!fullName,
                         phone: !!phone,
@@ -196,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     );
                     
                     // Reset form
-                    quickBookForm.reset();
+                    newForm.reset();
                     
                     // Close modal after 2 seconds
                     setTimeout(() => {
@@ -222,68 +219,63 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ==================== ENROLL MODAL SUBMISSION (FIXED) ====================
+// ==================== ENROLL MODAL SUBMISSION (COMPLETELY FIXED) ====================
 document.addEventListener('DOMContentLoaded', function() {
     const enrollForm = document.getElementById('enrollForm');
     
     if (enrollForm) {
-        enrollForm.addEventListener('submit', async function(e) {
+        // Remove any existing listeners to avoid duplicates
+        const newEnrollForm = enrollForm.cloneNode(true);
+        enrollForm.parentNode.replaceChild(newEnrollForm, enrollForm);
+        
+        newEnrollForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            e.stopPropagation();
             
             console.log('📝 Enroll form submitted');
             
             // Show loading state
-            const submitBtn = enrollForm.querySelector('button[type="submit"]');
+            const submitBtn = newEnrollForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Enrolling...';
             
             try {
-                console.log('🔍 ENROLL FORM DEBUGGING:');
+                console.log('🔍 ENROLL - DIRECT VALUE EXTRACTION');
                 
-                // CRITICAL: Get inputs and selects ONLY from within enrollForm (not entire page)
-                const formInputs = enrollForm.querySelectorAll('input.form-input');
-                const formSelects = enrollForm.querySelectorAll('select.form-select');
+                // Get text inputs by position (First Name, Last Name in first row, Email, Phone in second row)
+                const textInputs = newEnrollForm.querySelectorAll('input[type="text"]');
+                const firstName = textInputs[0]?.value.trim() || '';
+                const lastName = textInputs[1]?.value.trim() || '';
                 
-                console.log('📊 Form inputs found:', formInputs.length);
-                console.log('📊 Form selects found:', formSelects.length);
+                // Get email and phone
+                const email = newEnrollForm.querySelector('input[type="email"]').value.trim();
+                const phone = newEnrollForm.querySelector('input[type="tel"]').value.trim();
                 
-                // Log what we actually find
-                formInputs.forEach((input, i) => {
-                    console.log(`Input[${i}]:`, input.placeholder, '=', input.value);
-                });
+                // Get date
+                const startDate = newEnrollForm.querySelector('input[type="date"]').value;
                 
-                formSelects.forEach((select, i) => {
-                    console.log(`Select[${i}]:`, select.id, '=', select.value);
-                });
+                // Get selects by their exact position
+                const allSelects = newEnrollForm.querySelectorAll('select');
+                const className = allSelects[0].value;        // First = Class Selection
+                const enrollmentType = allSelects[1].value;   // Second = Enrollment Type
+                const preferredSchedule = allSelects[2].value; // Third = Preferred Schedule
+                const experienceLevel = allSelects[3].value;   // Fourth = Experience Level
                 
-                // Extract values using the EXACT order from your Enroll Modal HTML
-                // Based on your HTML structure:
-                // Row 1: First Name, Last Name
-                // Row 2: Email, Phone  
-                // Select: Class, Enrollment Type, Schedule, Date, Experience
-                
-                const firstName = formInputs[0]?.value.trim() || '';
-                const lastName = formInputs[1]?.value.trim() || '';
-                const email = formInputs[2]?.value.trim() || '';
-                const phone = formInputs[3]?.value.trim() || '';
-                const startDate = formInputs[4]?.value || '';
-                
-                const className = formSelects[0]?.value || '';
-                const enrollmentType = formSelects[1]?.value || '';
-                const preferredSchedule = formSelects[2]?.value || '';
-                const experienceLevel = formSelects[3]?.value || '';
-                
-                // Get fitness goals checkboxes
+                // Get fitness goals checkboxes (in the checkbox-group)
                 const fitnessGoals = [];
-                enrollForm.querySelectorAll('.checkbox-group .checkbox-input:checked').forEach(cb => {
-                    if (cb.value && cb.id !== 'enrollTerms') {
+                const goalCheckboxes = newEnrollForm.querySelectorAll('.checkbox-group .checkbox-input');
+                goalCheckboxes.forEach(cb => {
+                    if (cb.checked && cb.value && cb.id !== 'enrollTerms' && 
+                        (cb.value.includes('weight') || cb.value.includes('muscle') || 
+                         cb.value.includes('endurance') || cb.value.includes('flexibility') || 
+                         cb.value.includes('fitness'))) {
                         fitnessGoals.push(cb.value);
                     }
                 });
                 
-                // Get medical conditions
-                const medicalConditions = enrollForm.querySelector('.form-textarea') ? enrollForm.querySelector('.form-textarea').value.trim() : '';
+                // Get medical conditions textarea
+                const medicalConditions = newEnrollForm.querySelector('textarea').value.trim();
                 
                 const data = {
                     firstName,
@@ -303,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Validate required fields
                 if (!firstName || !lastName || !email || !phone || !className || !enrollmentType || !preferredSchedule || !startDate || !experienceLevel) {
-                    alert('Please fill in all required fields');
+                    showErrorMessage('Missing Information', 'Please fill in all required fields');
                     console.log('❌ Validation failed:', {
                         firstName: !!firstName,
                         lastName: !!lastName,
@@ -336,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         '🎉 Enrollment Successful!',
                         result.message
                     );
-                    enrollForm.reset();
+                    newEnrollForm.reset();
                     setTimeout(() => {
                         closeEnrollModal();
                     }, 2000);
@@ -361,14 +353,146 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ==================== HELPER FUNCTIONS ====================
 
-// Show success message
+// Show success message with custom modal
 function showSuccessMessage(title, message) {
-    alert(`${title}\n\n${message}`);
+    showMessageModal('success', title, message);
 }
 
-// Show error message
+// Show error message with custom modal
 function showErrorMessage(title, message) {
-    alert(`❌ ${title}\n\n${message}`);
+    showMessageModal('error', title, message);
+}
+
+// Show info/warning message with custom modal
+function showInfoMessage(title, message) {
+    showMessageModal('info', title, message);
+}
+
+// Create and show custom message modal
+function showMessageModal(type, title, message) {
+    // Remove existing message modal if any
+    const existingModal = document.getElementById('messageModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Icon based on type
+    let icon = '';
+    let iconColor = '';
+    let buttonColor = '';
+    
+    if (type === 'success') {
+        icon = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>`;
+        iconColor = '#00ff87';
+        buttonColor = 'linear-gradient(135deg, #00ff87 0%, #60efff 100%)';
+    } else if (type === 'error') {
+        icon = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="15" y1="9" x2="9" y2="15"/>
+                    <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>`;
+        iconColor = '#ff6b35';
+        buttonColor = 'linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%)';
+    } else {
+        icon = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>`;
+        iconColor = '#ff9500';
+        buttonColor = 'linear-gradient(135deg, #ff9500 0%, #ffa726 100%)';
+    }
+    
+    // Create modal HTML
+    const modalHTML = `
+        <div id="messageModal" class="modal-overlay active" style="z-index: 10000;">
+            <div class="modal-container" style="max-width: 500px; animation: messageModalSlideIn 0.3s ease-out;">
+                <!-- Modal Header -->
+                <div class="modal-header" style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border-bottom: 2px solid ${iconColor};">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                        <div style="color: ${iconColor}; animation: messageIconBounce 0.5s ease-out;">
+                            ${icon}
+                        </div>
+                        <h2 class="modal-title" style="margin: 0; font-size: 28px;">${title}</h2>
+                    </div>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body" style="padding: 40px; text-align: center;">
+                    <p style="font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); margin: 0;">
+                        ${message}
+                    </p>
+                </div>
+
+                <!-- Modal Footer -->
+                <div style="padding: 0 40px 40px; display: flex; justify-content: center;">
+                    <button onclick="closeMessageModal()" class="btn btn-primary" style="background: ${buttonColor}; min-width: 150px;">
+                        <span>OK</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            @keyframes messageModalSlideIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9) translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+            
+            @keyframes messageIconBounce {
+                0%, 100% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.1);
+                }
+            }
+        </style>
+    `;
+    
+    // Add to body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Close on outside click
+    const modal = document.getElementById('messageModal');
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeMessageModal();
+        }
+    });
+    
+    // Close on Escape key
+    const escapeHandler = function(e) {
+        if (e.key === 'Escape') {
+            closeMessageModal();
+            document.removeEventListener('keydown', escapeHandler);
+        }
+    };
+    document.addEventListener('keydown', escapeHandler);
+}
+
+// Close message modal
+function closeMessageModal() {
+    const modal = document.getElementById('messageModal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+        }, 300);
+    }
 }
 
 // Set minimum date for booking (today)
