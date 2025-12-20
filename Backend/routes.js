@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db');
+const chatbot = require('./chatbot');
 
 // ==================== USERS APIs ====================
 
@@ -280,30 +281,26 @@ router.get('/trainers/status/:status', async (req, res) => {
 router.post('/trainers', async (req, res) => {
     try {
         const { 
-            trainercode, 
-            trainername, 
-            traineremail, 
-            trainergender, 
-            trainerphonenumber, 
+            trainerName, 
+            email, 
+            phone, 
             specialisation, 
-            experienceyears, 
-            certification, 
+            experience, 
+            bio, 
             isActive, 
             created_by 
         } = req.body;
         
         const [result] = await db.query(
-            `INSERT INTO trainer (trainercode, trainername, traineremail, trainergender, trainerphonenumber, 
-             specialisation, experienceyears, certification, isActive, created_by, modified_by) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [trainercode, trainername, traineremail, trainergender, trainerphonenumber, 
-             specialisation, experienceyears, certification, isActive, created_by, created_by]
+            `INSERT INTO trainer (trainerName, email, phone, specialisation, experience, bio, isActive, created_by, modified_by) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [trainerName, email, phone, specialisation, experience, bio, isActive, created_by, created_by]
         );
         
         res.status(201).json({
             success: true,
             message: 'Trainer created successfully',
-            trainerId: result.insertId
+            trainer_id: result.insertId
         });
     } catch (error) {
         res.status(500).json({
@@ -318,24 +315,20 @@ router.post('/trainers', async (req, res) => {
 router.put('/trainers/:id', async (req, res) => {
     try {
         const { 
-            trainercode, 
-            trainername, 
-            traineremail, 
-            trainergender, 
-            trainerphonenumber, 
+            trainerName, 
+            email, 
+            phone, 
             specialisation, 
-            experienceyears, 
-            certification, 
+            experience, 
+            bio, 
             isActive, 
             modified_by 
         } = req.body;
         
         const [result] = await db.query(
-            `UPDATE trainer SET trainercode = ?, trainername = ?, traineremail = ?, trainergender = ?, 
-             trainerphonenumber = ?, specialisation = ?, experienceyears = ?, certification = ?, 
-             isActive = ?, modified_by = ?, modified_on = CURRENT_TIMESTAMP WHERE trainerId = ?`,
-            [trainercode, trainername, traineremail, trainergender, trainerphonenumber, 
-             specialisation, experienceyears, certification, isActive, modified_by, req.params.id]
+            `UPDATE trainer SET trainerName = ?, email = ?, phone = ?, specialisation = ?, experience = ?, 
+             bio = ?, isActive = ?, modified_by = ?, modified_on = CURRENT_TIMESTAMP WHERE trainerId = ?`,
+            [trainerName, email, phone, specialisation, experience, bio, isActive, modified_by, req.params.id]
         );
         
         if (result.affectedRows === 0) {
@@ -383,12 +376,12 @@ router.delete('/trainers/:id', async (req, res) => {
     }
 });
 
-// ==================== PLAN APIs ====================
+// ==================== PLANS APIs ====================
 
 // 1. GET - Get all plans
 router.get('/plans', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM plan');
+        const [rows] = await db.query('SELECT * FROM plans');
         res.json({
             success: true,
             count: rows.length,
@@ -406,7 +399,7 @@ router.get('/plans', async (req, res) => {
 // 2. GET - Get single plan by ID
 router.get('/plans/:id', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM plan WHERE planid = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM plans WHERE planId = ?', [req.params.id]);
         
         if (rows.length === 0) {
             return res.status(404).json({
@@ -431,7 +424,7 @@ router.get('/plans/:id', async (req, res) => {
 // 3. GET - Get plans by level
 router.get('/plans/level/:level', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM plan WHERE plan_level = ?', [req.params.level]);
+        const [rows] = await db.query('SELECT * FROM plans WHERE planLevel = ?', [req.params.level]);
         res.json({
             success: true,
             count: rows.length,
@@ -450,7 +443,7 @@ router.get('/plans/level/:level', async (req, res) => {
 router.get('/plans/status/:status', async (req, res) => {
     try {
         const isActive = req.params.status === 'active' ? 1 : 0;
-        const [rows] = await db.query('SELECT * FROM plan WHERE isActive = ?', [isActive]);
+        const [rows] = await db.query('SELECT * FROM plans WHERE isActive = ?', [isActive]);
         res.json({
             success: true,
             count: rows.length,
@@ -469,28 +462,25 @@ router.get('/plans/status/:status', async (req, res) => {
 router.post('/plans', async (req, res) => {
     try {
         const { 
-            planname, 
-            duration_days, 
-            price, 
-            description, 
-            plan_level, 
-            trainer_id, 
+            planName, 
+            planLevel, 
+            planPrice, 
+            planDesc, 
+            planDuration, 
             isActive, 
             created_by 
         } = req.body;
         
         const [result] = await db.query(
-            `INSERT INTO plan (planname, duration_days, price, description, plan_level, trainer_id, 
-             isActive, created_by, modified_by) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [planname, duration_days, price, description, plan_level, trainer_id, 
-             isActive, created_by, created_by]
+            `INSERT INTO plans (planName, planLevel, planPrice, planDesc, planDuration, isActive, created_by, modified_by) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [planName, planLevel, planPrice, planDesc, planDuration, isActive, created_by, created_by]
         );
         
         res.status(201).json({
             success: true,
             message: 'Plan created successfully',
-            planid: result.insertId
+            plan_id: result.insertId
         });
     } catch (error) {
         res.status(500).json({
@@ -505,22 +495,19 @@ router.post('/plans', async (req, res) => {
 router.put('/plans/:id', async (req, res) => {
     try {
         const { 
-            planname, 
-            duration_days, 
-            price, 
-            description, 
-            plan_level, 
-            trainer_id, 
+            planName, 
+            planLevel, 
+            planPrice, 
+            planDesc, 
+            planDuration, 
             isActive, 
             modified_by 
         } = req.body;
         
         const [result] = await db.query(
-            `UPDATE plan SET planname = ?, duration_days = ?, price = ?, description = ?, 
-             plan_level = ?, trainer_id = ?, isActive = ?, modified_by = ?, 
-             modified_on = CURRENT_TIMESTAMP WHERE planid = ?`,
-            [planname, duration_days, price, description, plan_level, trainer_id, 
-             isActive, modified_by, req.params.id]
+            `UPDATE plans SET planName = ?, planLevel = ?, planPrice = ?, planDesc = ?, planDuration = ?, 
+             isActive = ?, modified_by = ?, modified_on = CURRENT_TIMESTAMP WHERE planId = ?`,
+            [planName, planLevel, planPrice, planDesc, planDuration, isActive, modified_by, req.params.id]
         );
         
         if (result.affectedRows === 0) {
@@ -546,7 +533,7 @@ router.put('/plans/:id', async (req, res) => {
 // 7. DELETE - Delete plan
 router.delete('/plans/:id', async (req, res) => {
     try {
-        const [result] = await db.query('DELETE FROM plan WHERE planid = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM plans WHERE planId = ?', [req.params.id]);
         
         if (result.affectedRows === 0) {
             return res.status(404).json({
@@ -568,12 +555,12 @@ router.delete('/plans/:id', async (req, res) => {
     }
 });
 
-// ==================== MEMBER SUBSCRIPTIONS APIs ====================
+// ==================== SUBSCRIPTIONS APIs ====================
 
 // 1. GET - Get all subscriptions
 router.get('/subscriptions', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM memberSubscriptions');
+        const [rows] = await db.query('SELECT * FROM subscriptions');
         res.json({
             success: true,
             count: rows.length,
@@ -591,7 +578,7 @@ router.get('/subscriptions', async (req, res) => {
 // 2. GET - Get single subscription by ID
 router.get('/subscriptions/:id', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM memberSubscriptions WHERE subscription_id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM subscriptions WHERE subscriptionId = ?', [req.params.id]);
         
         if (rows.length === 0) {
             return res.status(404).json({
@@ -616,7 +603,7 @@ router.get('/subscriptions/:id', async (req, res) => {
 // 3. GET - Get subscriptions by member ID
 router.get('/subscriptions/member/:memberId', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM memberSubscriptions WHERE memberid = ?', [req.params.memberId]);
+        const [rows] = await db.query('SELECT * FROM subscriptions WHERE memberId = ?', [req.params.memberId]);
         res.json({
             success: true,
             count: rows.length,
@@ -625,7 +612,7 @@ router.get('/subscriptions/member/:memberId', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error fetching member subscriptions',
+            message: 'Error searching subscriptions',
             error: error.message
         });
     }
@@ -634,7 +621,7 @@ router.get('/subscriptions/member/:memberId', async (req, res) => {
 // 4. GET - Get subscriptions by plan ID
 router.get('/subscriptions/plan/:planId', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM memberSubscriptions WHERE planid = ?', [req.params.planId]);
+        const [rows] = await db.query('SELECT * FROM subscriptions WHERE planId = ?', [req.params.planId]);
         res.json({
             success: true,
             count: rows.length,
@@ -643,7 +630,7 @@ router.get('/subscriptions/plan/:planId', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error fetching plan subscriptions',
+            message: 'Error searching subscriptions by plan',
             error: error.message
         });
     }
@@ -652,7 +639,7 @@ router.get('/subscriptions/plan/:planId', async (req, res) => {
 // 5. GET - Get subscriptions by payment status
 router.get('/subscriptions/payment/:status', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM memberSubscriptions WHERE paymentStatus = ?', [req.params.status]);
+        const [rows] = await db.query('SELECT * FROM subscriptions WHERE paymentStatus = ?', [req.params.status]);
         res.json({
             success: true,
             count: rows.length,
@@ -661,7 +648,7 @@ router.get('/subscriptions/payment/:status', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error fetching subscriptions by payment status',
+            message: 'Error searching subscriptions by payment status',
             error: error.message
         });
     }
@@ -670,7 +657,7 @@ router.get('/subscriptions/payment/:status', async (req, res) => {
 // 6. GET - Get subscriptions by membership status
 router.get('/subscriptions/memstatus/:status', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM memberSubscriptions WHERE memsubstatus = ?', [req.params.status]);
+        const [rows] = await db.query('SELECT * FROM subscriptions WHERE membershipStatus = ?', [req.params.status]);
         res.json({
             success: true,
             count: rows.length,
@@ -679,7 +666,7 @@ router.get('/subscriptions/memstatus/:status', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error fetching subscriptions by membership status',
+            message: 'Error searching subscriptions by membership status',
             error: error.message
         });
     }
@@ -689,20 +676,19 @@ router.get('/subscriptions/memstatus/:status', async (req, res) => {
 router.post('/subscriptions', async (req, res) => {
     try {
         const { 
-            memberid, 
-            planid, 
+            memberId, 
+            planId, 
             startDate, 
             endDate, 
-            amountPaid, 
             paymentStatus, 
-            memsubstatus 
+            membershipStatus, 
+            created_by 
         } = req.body;
         
         const [result] = await db.query(
-            `INSERT INTO memberSubscriptions (memberid, planid, startDate, endDate, amountPaid, 
-             paymentStatus, memsubstatus) 
-             VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [memberid, planid, startDate, endDate, amountPaid, paymentStatus, memsubstatus]
+            `INSERT INTO subscriptions (memberId, planId, startDate, endDate, paymentStatus, membershipStatus, created_by, modified_by) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [memberId, planId, startDate, endDate, paymentStatus, membershipStatus, created_by, created_by]
         );
         
         res.status(201).json({
@@ -723,19 +709,19 @@ router.post('/subscriptions', async (req, res) => {
 router.put('/subscriptions/:id', async (req, res) => {
     try {
         const { 
-            memberid, 
-            planid, 
+            memberId, 
+            planId, 
             startDate, 
             endDate, 
-            amountPaid, 
             paymentStatus, 
-            memsubstatus 
+            membershipStatus, 
+            modified_by 
         } = req.body;
         
         const [result] = await db.query(
-            `UPDATE memberSubscriptions SET memberid = ?, planid = ?, startDate = ?, endDate = ?, 
-             amountPaid = ?, paymentStatus = ?, memsubstatus = ? WHERE subscription_id = ?`,
-            [memberid, planid, startDate, endDate, amountPaid, paymentStatus, memsubstatus, req.params.id]
+            `UPDATE subscriptions SET memberId = ?, planId = ?, startDate = ?, endDate = ?, paymentStatus = ?, 
+             membershipStatus = ?, modified_by = ?, modified_on = CURRENT_TIMESTAMP WHERE subscriptionId = ?`,
+            [memberId, planId, startDate, endDate, paymentStatus, membershipStatus, modified_by, req.params.id]
         );
         
         if (result.affectedRows === 0) {
@@ -761,7 +747,7 @@ router.put('/subscriptions/:id', async (req, res) => {
 // 9. DELETE - Delete subscription
 router.delete('/subscriptions/:id', async (req, res) => {
     try {
-        const [result] = await db.query('DELETE FROM memberSubscriptions WHERE subscription_id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM subscriptions WHERE subscriptionId = ?', [req.params.id]);
         
         if (result.affectedRows === 0) {
             return res.status(404).json({
@@ -783,114 +769,10 @@ router.delete('/subscriptions/:id', async (req, res) => {
     }
 });
 
-// ==================== MODAL ROUTES ====================
+// ==================== BOOKINGS API ====================
 
-// ==================== JOIN NOW MODAL APIs ====================
-
-// POST - Submit Join Now Form (Create New User/Member)
-router.post('/join-now', async (req, res) => {
-    try {
-        const { 
-            firstName,
-            lastName,
-            email, 
-            phone,
-            membershipType,
-            fitnessGoals,  // Array of goals: ['weight-loss', 'muscle-gain', etc.]
-            experienceLevel,
-            additionalNotes
-        } = req.body;
-        
-        // Create full name
-        const fullName = `${firstName} ${lastName}`;
-        
-        // Create user in users table
-        const [result] = await db.query(
-            `INSERT INTO users (user_name, first_name, last_name, email, password_hash, user_phone, 
-             membership_type, experience_level, additional_notes, isActive, isDeleted, created_by, modified_by) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 0, 'web_form', 'web_form')`,
-            [fullName, firstName, lastName, email, 'temp_password_123', phone, 
-             membershipType, experienceLevel, additionalNotes]
-        );
-        
-        const userId = result.insertId;
-        
-        // Insert fitness goals if provided
-        if (fitnessGoals && Array.isArray(fitnessGoals) && fitnessGoals.length > 0) {
-            const goalValues = fitnessGoals.map(goal => [userId, goal]);
-            await db.query(
-                'INSERT INTO user_fitness_goals (user_id, goal_type) VALUES ?',
-                [goalValues]
-            );
-        }
-        
-        res.status(201).json({
-            success: true,
-            message: 'Welcome to CrossBox! Your membership has been created successfully.',
-            data: {
-                user_id: userId,
-                name: fullName,
-                email: email,
-                membership_type: membershipType
-            }
-        });
-    } catch (error) {
-        // Check for duplicate email
-        if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(409).json({
-                success: false,
-                message: 'An account with this email already exists. Please login or use a different email.',
-                error: 'Duplicate email'
-            });
-        }
-        
-        res.status(500).json({
-            success: false,
-            message: 'Error creating membership. Please try again.',
-            error: error.message
-        });
-    }
-});
-
-// GET - Get user with fitness goals
-router.get('/members/:id/goals', async (req, res) => {
-    try {
-        // Get user info
-        const [userRows] = await db.query('SELECT * FROM users WHERE user_id = ?', [req.params.id]);
-        
-        if (userRows.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'Member not found'
-            });
-        }
-        
-        // Get fitness goals
-        const [goalRows] = await db.query(
-            'SELECT goal_type FROM user_fitness_goals WHERE user_id = ?',
-            [req.params.id]
-        );
-        
-        const user = userRows[0];
-        user.fitness_goals = goalRows.map(g => g.goal_type);
-        
-        res.json({
-            success: true,
-            data: user
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Error fetching member details',
-            error: error.message
-        });
-    }
-});
-
-// ==================== QUICK BOOK MODAL APIs ====================
-
-// POST - Submit Quick Book Form (Create New Booking)
-router.post('/quick-book', async (req, res) => {
+// POST - Create booking
+router.post('/bookings', async (req, res) => {
     try {
         const { 
             fullName,
@@ -901,38 +783,25 @@ router.post('/quick-book', async (req, res) => {
             timeSlot,
             numParticipants,
             specialRequirements,
-            reminderSMS,
-            reminderEmail,
-            waitlist
+            bookingStatus
         } = req.body;
         
         const [result] = await db.query(
             `INSERT INTO bookings (full_name, email, phone, class_name, booking_date, time_slot, 
-             num_participants, special_requirements, reminder_sms, reminder_email, waitlist, booking_status) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [fullName, email, phone, className, bookingDate, timeSlot, 
-             numParticipants || 1, specialRequirements, reminderSMS || false, 
-             reminderEmail || false, waitlist || false, waitlist ? 'Waitlist' : 'Confirmed']
+             num_participants, special_requirements, booking_status) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [fullName, email, phone, className, bookingDate, timeSlot, numParticipants, specialRequirements, bookingStatus]
         );
         
         res.status(201).json({
             success: true,
-            message: waitlist 
-                ? 'You have been added to the waitlist. We will notify you when a slot opens up.' 
-                : 'Your class has been booked successfully! See you at the gym!',
-            data: {
-                booking_id: result.insertId,
-                full_name: fullName,
-                class_name: className,
-                booking_date: bookingDate,
-                time_slot: timeSlot,
-                status: waitlist ? 'Waitlist' : 'Confirmed'
-            }
+            message: 'Booking created successfully',
+            booking_id: result.insertId
         });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error creating booking. Please try again.',
+            message: 'Error creating booking',
             error: error.message
         });
     }
@@ -941,7 +810,7 @@ router.post('/quick-book', async (req, res) => {
 // GET - Get all bookings
 router.get('/bookings', async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM bookings WHERE isDeleted = 0 ORDER BY booking_date DESC, time_slot ASC');
+        const [rows] = await db.query('SELECT * FROM bookings WHERE isDeleted = 0 ORDER BY booking_date DESC');
         res.json({
             success: true,
             count: rows.length,
@@ -956,7 +825,7 @@ router.get('/bookings', async (req, res) => {
     }
 });
 
-// GET - Get single booking by ID
+// GET - Get booking by ID
 router.get('/bookings/:id', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM bookings WHERE booking_id = ? AND isDeleted = 0', [req.params.id]);
@@ -1231,5 +1100,46 @@ router.get('/enrollments/email/:email', async (req, res) => {
     }
 });
 
+// ==================== CHATBOT API (NEW!) ====================
+
+// POST - Chat with the gym chatbot
+router.post('/chatbot', async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        if (!message || message.trim() === '') {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide a message'
+            });
+        }
+
+        // Process message through chatbot
+        const response = await chatbot.processMessage(message);
+
+        res.json({
+            success: true,
+            data: response
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error processing chatbot message',
+            error: error.message
+        });
+    }
+});
+
+// GET - Chatbot info endpoint
+router.get('/chatbot/info', (req, res) => {
+    res.json({
+        success: true,
+        data: {
+            name: 'CrossBox Fitness Assistant',
+            version: '1.0.0',
+            description: 'AI-powered gym assistant that helps with subscriptions, classes, trainers, bookings and gym information'
+        }
+    });
+});
 
 module.exports = router;

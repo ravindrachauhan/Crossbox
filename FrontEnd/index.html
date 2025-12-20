@@ -508,6 +508,8 @@
         }
     </style>
 
+    <link rel="stylesheet" href="./css/chatbot.css">
+
 
   </head>
   <body>
@@ -3277,6 +3279,28 @@
 
 
 <script src="js/modals.js"></script>
+
+<!-- Chatbot Widget -->
+<div class="chatbot-widget">
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <div id="chatbot-container" class="chatbot-container">
+        <div class="chatbot-header">
+            <h3>CrossBox Assistant</h3>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="status">Online</span>
+                <button class="chatbot-close-btn" id="chatbot-close">✕</button>
+            </div>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages"></div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" class="chatbot-input" 
+                   placeholder="Ask about subscriptions, classes, trainers..." autocomplete="off"/>
+            <button id="chatbot-send" class="chatbot-send-btn">➤</button>
+        </div>
+    </div>
+</div>
+<script src="./js/chatbot-ui.js"></script>
+
 
 </body>
 
