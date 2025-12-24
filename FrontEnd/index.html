@@ -3302,6 +3302,449 @@
 <script src="./js/chatbot-ui.js"></script>
 
 
+<!-- ==================== FREE TRIAL MODAL ==================== -->
+
+<div id="freeTrialModal" class="modal-overlay">
+    <div class="modal-container">
+        <!-- Close Button -->
+        <button class="modal-close" onclick="closeFreeTrialModal()" aria-label="Close modal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <div class="modal-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"/>
+                </svg>
+                <span class="modal-logo-text">CrossBox</span>
+            </div>
+            <h2 class="modal-title">Start Your Free 7-Day Trial</h2>
+            <p class="modal-subtitle">Transform your fitness journey with unlimited access to all classes and facilities!</p>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <!-- Trial Benefits -->
+            <div class="benefits-section">
+                <div class="benefits-title">
+                    <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="m5 12l5 5L20 7"/>
+                    </svg>
+                    What's Included in Your Free Trial
+                </div>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Unlimited Access to All Classes
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Free Personal Training Session
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Nutrition Consultation
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        No Credit Card Required
+                    </div>
+                </div>
+            </div>
+
+            <!-- Free Trial Form -->
+            <form class="join-form" id="freeTrialForm">
+                <!-- Personal Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            First Name <span class="required">*</span>
+                        </label>
+                        <input type="text" name="firstName" class="form-input" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Last Name <span class="required">*</span>
+                        </label>
+                        <input type="text" name="lastName" class="form-input" placeholder="Doe" required>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Email <span class="required">*</span>
+                        </label>
+                        <input type="email" name="email" class="form-input" placeholder="john.doe@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Phone <span class="required">*</span>
+                        </label>
+                        <input type="tel" name="phone" class="form-input" placeholder="(555) 123-4567" required>
+                    </div>
+                </div>
+
+                <!-- Trial Start Date & Time -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Preferred Start Date <span class="required">*</span>
+                        </label>
+                        <input type="date" name="preferredStartDate" class="form-input" required id="trialStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Preferred Time <span class="required">*</span>
+                        </label>
+                        <select name="preferredTime" class="form-select" required>
+                            <option value="">Select your preferred time</option>
+                            <option value="Morning (6:00 AM - 10:00 AM)">Morning (6:00 AM - 10:00 AM)</option>
+                            <option value="Midday (10:00 AM - 2:00 PM)">Midday (10:00 AM - 2:00 PM)</option>
+                            <option value="Afternoon (2:00 PM - 6:00 PM)">Afternoon (2:00 PM - 6:00 PM)</option>
+                            <option value="Evening (6:00 PM - 9:00 PM)">Evening (6:00 PM - 9:00 PM)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Fitness Goals -->
+                <div class="form-group">
+                    <label class="form-label">
+                        What are your fitness goals?
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fitnessGoals" class="checkbox-input" value="Weight Loss">
+                            Weight Loss & Fat Burning
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fitnessGoals" class="checkbox-input" value="Build Muscle">
+                            Build Muscle & Strength
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fitnessGoals" class="checkbox-input" value="Improve Endurance">
+                            Improve Endurance
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fitnessGoals" class="checkbox-input" value="Flexibility">
+                            Increase Flexibility & Mobility
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fitnessGoals" class="checkbox-input" value="Overall Fitness">
+                            Overall Health & Fitness
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="fitnessGoals" class="checkbox-input" value="Stress Relief">
+                            Stress Relief & Wellness
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Experience Level -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Fitness Experience Level <span class="required">*</span>
+                    </label>
+                    <select name="experienceLevel" class="form-select" required>
+                        <option value="">Select your experience level</option>
+                        <option value="Beginner">Beginner - New to fitness</option>
+                        <option value="Intermediate">Intermediate - Some experience</option>
+                        <option value="Advanced">Advanced - Regular training</option>
+                        <option value="Athlete">Athlete - Competitive level</option>
+                    </select>
+                </div>
+
+                <!-- How did you hear about us -->
+                <div class="form-group">
+                    <label class="form-label">
+                        How did you hear about us?
+                    </label>
+                    <select name="heardAboutUs" class="form-select">
+                        <option value="">Select an option</option>
+                        <option value="Google Search">Google Search</option>
+                        <option value="Social Media">Social Media (Instagram/Facebook)</option>
+                        <option value="Friend Referral">Friend or Family Referral</option>
+                        <option value="Billboard">Billboard/Advertisement</option>
+                        <option value="Passing By">Passing by the gym</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Additional Notes (Optional)
+                    </label>
+                    <textarea name="additionalNotes" class="form-textarea" placeholder="Tell us about any medical conditions, injuries, or specific goals we should know about..."></textarea>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="terms-group">
+                    <input type="checkbox" id="trialTerms" class="checkbox-input terms-checkbox" required>
+                    <label for="trialTerms" class="terms-label">
+                        I agree to the <a href="#">Free Trial Terms</a> and <a href="#">Privacy Policy</a>. I understand this is a 7-day trial with no commitment and I can cancel anytime.
+                    </label>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeFreeTrialModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Start My Free Trial
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== BOOK A VISIT MODAL ==================== -->
+<div id="bookVisitModal" class="modal-overlay">
+    <div class="modal-container">
+        <!-- Close Button -->
+        <button class="modal-close" onclick="closeBookVisitModal()" aria-label="Close modal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <div class="modal-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"/>
+                </svg>
+                <span class="modal-logo-text">CrossBox</span>
+            </div>
+            <h2 class="modal-title">Schedule Your Visit</h2>
+            <p class="modal-subtitle">Tour our world-class facility and meet our expert trainers!</p>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <!-- Visit Benefits -->
+            <div class="benefits-section" style="background: rgba(255, 149, 0, 0.05); border-color: rgba(255, 149, 0, 0.2);">
+                <div class="benefits-title" style="color: var(--color-accent);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    What to Expect During Your Visit
+                </div>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Complete Facility Tour
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Meet Expert Trainers
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Fitness Assessment
+                    </div>
+                    <div class="benefit-item">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="m5 12l5 5L20 7"/>
+                        </svg>
+                        Membership Options
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Visit Form -->
+            <form class="join-form" id="bookVisitForm">
+                <!-- Personal Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            First Name <span class="required">*</span>
+                        </label>
+                        <input type="text" name="firstName" class="form-input" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Last Name <span class="required">*</span>
+                        </label>
+                        <input type="text" name="lastName" class="form-input" placeholder="Doe" required>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Email <span class="required">*</span>
+                        </label>
+                        <input type="email" name="email" class="form-input" placeholder="john.doe@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Phone <span class="required">*</span>
+                        </label>
+                        <input type="tel" name="phone" class="form-input" placeholder="(555) 123-4567" required>
+                    </div>
+                </div>
+
+                <!-- Visit Date & Time -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Visit Date <span class="required">*</span>
+                        </label>
+                        <input type="date" name="visitDate" class="form-input" required id="visitDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Preferred Time <span class="required">*</span>
+                        </label>
+                        <select name="visitTime" class="form-select" required>
+                            <option value="">Select visit time</option>
+                            <option value="9:00 AM">9:00 AM - Morning Tour</option>
+                            <option value="10:00 AM">10:00 AM</option>
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="12:00 PM">12:00 PM - Lunch Hour</option>
+                            <option value="2:00 PM">2:00 PM</option>
+                            <option value="3:00 PM">3:00 PM</option>
+                            <option value="4:00 PM">4:00 PM</option>
+                            <option value="5:00 PM">5:00 PM - Evening Tour</option>
+                            <option value="6:00 PM">6:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Number of Guests -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Number of Guests <span class="required">*</span>
+                    </label>
+                    <select name="numGuests" class="form-select" required>
+                        <option value="1">Just me (1 person)</option>
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4 people</option>
+                        <option value="5+">5 or more (Group visit)</option>
+                    </select>
+                </div>
+
+                <!-- Purpose of Visit -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Purpose of Visit <span class="required">*</span>
+                    </label>
+                    <select name="visitPurpose" class="form-select" required>
+                        <option value="">Select your purpose</option>
+                        <option value="Facility Tour">General Facility Tour</option>
+                        <option value="Consultation">Personal Training Consultation</option>
+                        <option value="Trial Class">Try a Trial Class</option>
+                        <option value="Corporate Inquiry">Corporate/Group Membership Inquiry</option>
+                        <option value="Membership Info">Membership Information</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Interested In -->
+                <div class="form-group">
+                    <label class="form-label">
+                        What are you most interested in?
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interestedIn" class="checkbox-input" value="Gym Equipment">
+                            Gym Equipment & Machines
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interestedIn" class="checkbox-input" value="Group Classes">
+                            Group Fitness Classes
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interestedIn" class="checkbox-input" value="Personal Training">
+                            Personal Training Services
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interestedIn" class="checkbox-input" value="Swimming Pool">
+                            Swimming Pool & Spa
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interestedIn" class="checkbox-input" value="Nutrition Counseling">
+                            Nutrition Counseling
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="interestedIn" class="checkbox-input" value="All Facilities">
+                            See Everything!
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tour Guide -->
+                <div class="form-group">
+                    <label class="checkbox-label" style="padding: 16px; background: rgba(0, 255, 135, 0.05); border: 1px solid rgba(0, 255, 135, 0.2); border-radius: 10px;">
+                        <input type="checkbox" name="tourGuideNeeded" class="checkbox-input" value="true">
+                        <span style="font-weight: 600; color: var(--color-success);">I would like a dedicated tour guide</span>
+                        <span style="display: block; font-size: 13px; color: rgba(255, 255, 255, 0.7); margin-top: 4px;">
+                            Get personalized attention and ask all your questions!
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Special Requests -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Special Requests (Optional)
+                    </label>
+                    <textarea name="specialRequests" class="form-textarea" placeholder="Any specific questions, accessibility needs, or areas you'd like to focus on during your visit..."></textarea>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="terms-group">
+                    <input type="checkbox" id="visitTerms" class="checkbox-input terms-checkbox" required>
+                    <label for="visitTerms" class="terms-label">
+                        I agree to the <a href="#">Visit Policy</a> and <a href="#">Privacy Policy</a>. I understand I can reschedule or cancel my visit up to 24 hours in advance.
+                    </label>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeBookVisitModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                        Confirm Visit Booking
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </body>
 
 </html>

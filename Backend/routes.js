@@ -807,6 +807,68 @@ router.post('/bookings', async (req, res) => {
     }
 });
 
+router.post('/quick-book', async (req, res) => {
+    try {
+        const { 
+            fullName,
+            email,
+            phone,
+            className,
+            bookingDate,
+            timeSlot,
+            numParticipants,
+            specialRequirements,
+            reminderSMS,
+            reminderEmail,
+            waitlist
+        } = req.body;
+
+        // Validate required fields
+        if (!fullName || !email || !phone || !className || !bookingDate || !timeSlot) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please fill all required fields'
+            });
+        }
+
+        // Check if slot is available (you can add your own logic here)
+        // For now, we'll assume all bookings are confirmed
+        const bookingStatus = 'Confirmed';
+
+        // Insert booking record
+        const [result] = await db.query(
+            `INSERT INTO bookings 
+            (full_name, email, phone, class_name, booking_date, time_slot, 
+             num_participants, special_requirements, booking_status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [fullName, email, phone, className, bookingDate, timeSlot, 
+             numParticipants || 1, specialRequirements, bookingStatus]
+        );
+
+        res.status(201).json({
+            success: true,
+            message: `Your class has been booked successfully! We'll send you a confirmation email shortly.`,
+            data: {
+                booking_id: result.insertId,
+                fullName,
+                email,
+                className,
+                bookingDate,
+                timeSlot,
+                status: bookingStatus
+            }
+        });
+
+    } catch (error) {
+        console.error('Quick Book Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error processing booking. Please try again.',
+            error: error.message
+        });
+    }
+});
+
 // GET - Get all bookings
 router.get('/bookings', async (req, res) => {
     try {
@@ -824,6 +886,8 @@ router.get('/bookings', async (req, res) => {
         });
     }
 });
+
+
 
 // GET - Get booking by ID
 router.get('/bookings/:id', async (req, res) => {
@@ -1141,5 +1205,380 @@ router.get('/chatbot/info', (req, res) => {
         }
     });
 });
+
+// ==================== FREE TRIAL APIs ====================
+
+// POST - Submit Free Trial Form
+router.post('/free-trial', async (req, res) => {
+    try {
+        const { 
+            firstName,
+            lastName,
+            email, 
+            phone,
+            preferredStartDate,
+            preferredTime,
+            fitnessGoals,  // Array or comma-separated string
+            experienceLevel,
+            heardAboutUs,
+            additionalNotes
+        } = req.body;
+
+        // Validate required fields
+        if (!firstName || !lastName || !email || !phone || !preferredStartDate || !preferredTime || !experienceLevel) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please fill all required fields'
+            });
+        }
+
+        // Check for duplicate email
+        const [existingTrial] = await db.query(
+            'SELECT * FROM free_trials WHERE email = ? AND isDeleted = 0',
+            [email]
+        );
+
+        if (existingTrial.length > 0) {
+            return res.status(409).json({
+                success: false,
+                message: 'An active free trial request already exists with this email'
+            });
+        }
+
+        // Convert fitness goals array to comma-separated string
+        const goalsString = Array.isArray(fitnessGoals) ? fitnessGoals.join(', ') : fitnessGoals;
+
+        // Insert free trial record
+        const [result] = await db.query(
+            `INSERT INTO free_trials 
+            (first_name, last_name, email, phone, preferred_start_date, preferred_time, 
+             fitness_goals, experience_level, heard_about_us, additional_notes, trial_status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')`,
+            [firstName, lastName, email, phone, preferredStartDate, preferredTime, 
+             goalsString, experienceLevel, heardAboutUs, additionalNotes]
+        );
+
+        res.status(201).json({
+            success: true,
+            message: '🎉 Free trial request submitted successfully!',
+            trialId: result.insertId,
+            data: {
+                firstName,
+                lastName,
+                email,
+                preferredStartDate,
+                preferredTime
+            }
+        });
+
+    } catch (error) {
+        console.error('Free Trial Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error submitting free trial request',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get all free trials
+router.get('/free-trials', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM free_trials WHERE isDeleted = 0 ORDER BY created_at DESC'
+        );
+        
+        res.json({
+            success: true,
+            count: rows.length,
+            data: rows
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching free trials',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get single free trial by ID
+router.get('/free-trials/:id', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM free_trials WHERE trial_id = ? AND isDeleted = 0',
+            [req.params.id]
+        );
+        
+        if (rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Free trial not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            data: rows[0]
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching free trial',
+            error: error.message
+        });
+    }
+});
+
+// PUT - Update free trial status
+router.put('/free-trials/:id/status', async (req, res) => {
+    try {
+        const { status } = req.body; // Pending, Confirmed, Completed, Cancelled
+        
+        const [result] = await db.query(
+            'UPDATE free_trials SET trial_status = ?, modified_at = NOW() WHERE trial_id = ?',
+            [status, req.params.id]
+        );
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Free trial not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            message: 'Trial status updated successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error updating trial status',
+            error: error.message
+        });
+    }
+});
+
+// ==================== FACILITY VISIT APIs ====================
+
+// POST - Submit Visit Booking Form
+router.post('/book-visit', async (req, res) => {
+    try {
+        const { 
+            firstName,
+            lastName,
+            email, 
+            phone,
+            visitDate,
+            visitTime,
+            numGuests,
+            visitPurpose,
+            interestedIn,  // Array or comma-separated string
+            specialRequests,
+            tourGuideNeeded
+        } = req.body;
+
+        // Validate required fields
+        if (!firstName || !lastName || !email || !phone || !visitDate || !visitTime || !visitPurpose) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please fill all required fields'
+            });
+        }
+
+        // Convert interested areas array to comma-separated string
+        const interestedString = Array.isArray(interestedIn) ? interestedIn.join(', ') : interestedIn;
+
+        // Insert visit booking record
+        const [result] = await db.query(
+            `INSERT INTO facility_visits 
+            (first_name, last_name, email, phone, visit_date, visit_time, 
+             num_guests, visit_purpose, interested_in, special_requests, tour_guide_needed, visit_status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Scheduled')`,
+            [firstName, lastName, email, phone, visitDate, visitTime, 
+             numGuests || 1, visitPurpose, interestedString, specialRequests, tourGuideNeeded || false]
+        );
+
+        res.status(201).json({
+            success: true,
+            message: '🎉 Visit booking confirmed successfully!',
+            visitId: result.insertId,
+            data: {
+                firstName,
+                lastName,
+                email,
+                visitDate,
+                visitTime,
+                visitPurpose
+            }
+        });
+
+    } catch (error) {
+        console.error('Visit Booking Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error booking facility visit',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get all facility visits
+router.get('/facility-visits', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM facility_visits WHERE isDeleted = 0 ORDER BY visit_date DESC, created_at DESC'
+        );
+        
+        res.json({
+            success: true,
+            count: rows.length,
+            data: rows
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching facility visits',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get single facility visit by ID
+router.get('/facility-visits/:id', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM facility_visits WHERE visit_id = ? AND isDeleted = 0',
+            [req.params.id]
+        );
+        
+        if (rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Visit booking not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            data: rows[0]
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching visit booking',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get visits by date
+router.get('/facility-visits/date/:date', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM facility_visits WHERE visit_date = ? AND isDeleted = 0 ORDER BY visit_time',
+            [req.params.date]
+        );
+        
+        res.json({
+            success: true,
+            count: rows.length,
+            data: rows
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching visits by date',
+            error: error.message
+        });
+    }
+});
+
+// PUT - Update visit status
+router.put('/facility-visits/:id/status', async (req, res) => {
+    try {
+        const { status } = req.body; // Scheduled, Confirmed, Completed, Cancelled
+        
+        const [result] = await db.query(
+            'UPDATE facility_visits SET visit_status = ?, modified_at = NOW() WHERE visit_id = ?',
+            [status, req.params.id]
+        );
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Visit booking not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            message: 'Visit status updated successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error updating visit status',
+            error: error.message
+        });
+    }
+});
+
+// DELETE - Soft delete free trial
+router.delete('/free-trials/:id', async (req, res) => {
+    try {
+        const [result] = await db.query(
+            'UPDATE free_trials SET isDeleted = 1, modified_at = NOW() WHERE trial_id = ?',
+            [req.params.id]
+        );
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Free trial not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            message: 'Free trial deleted successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error deleting free trial',
+            error: error.message
+        });
+    }
+});
+
+// DELETE - Soft delete facility visit
+router.delete('/facility-visits/:id', async (req, res) => {
+    try {
+        const [result] = await db.query(
+            'UPDATE facility_visits SET isDeleted = 1, modified_at = NOW() WHERE visit_id = ?',
+            [req.params.id]
+        );
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Visit booking not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            message: 'Visit booking deleted successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error deleting visit booking',
+            error: error.message
+        });
+    }
+})
 
 module.exports = router;

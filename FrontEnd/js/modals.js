@@ -510,4 +510,310 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-console.log('✅ Modals.js (COMPLETELY FIXED VERSION) loaded successfully!');
+// ==================== FREE TRIAL MODAL ====================
+
+// Open Free Trial Modal
+function openFreeTrialModal() {
+    const modal = document.getElementById('freeTrialModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Set minimum date to today
+    const dateInput = document.getElementById('trialStartDate');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+}
+
+// Close Free Trial Modal
+function closeFreeTrialModal() {
+    const modal = document.getElementById('freeTrialModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Free Trial Form Submission
+document.addEventListener('DOMContentLoaded', function() {
+    const freeTrialForm = document.getElementById('freeTrialForm');
+    
+    if (freeTrialForm) {
+        freeTrialForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('=== Free Trial Form Submission Started ===');
+            
+            // Show loading state
+            const submitBtn = freeTrialForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Submitting...';
+            
+            try {
+                // Get form data using direct selectors
+                const formData = {
+                    firstName: document.querySelector('#freeTrialForm input[name="firstName"]').value.trim(),
+                    lastName: document.querySelector('#freeTrialForm input[name="lastName"]').value.trim(),
+                    email: document.querySelector('#freeTrialForm input[name="email"]').value.trim(),
+                    phone: document.querySelector('#freeTrialForm input[name="phone"]').value.trim(),
+                    preferredStartDate: document.querySelector('#freeTrialForm input[name="preferredStartDate"]').value,
+                    preferredTime: document.querySelector('#freeTrialForm select[name="preferredTime"]').value,
+                    experienceLevel: document.querySelector('#freeTrialForm select[name="experienceLevel"]').value,
+                    heardAboutUs: document.querySelector('#freeTrialForm select[name="heardAboutUs"]').value,
+                    additionalNotes: document.querySelector('#freeTrialForm textarea[name="additionalNotes"]').value.trim()
+                };
+                
+                // Collect fitness goals (checkboxes)
+                const fitnessGoalsCheckboxes = document.querySelectorAll('#freeTrialForm input[name="fitnessGoals"]:checked');
+                formData.fitnessGoals = Array.from(fitnessGoalsCheckboxes).map(cb => cb.value);
+                
+                console.log('Form Data Collected:', formData);
+                
+                // Validate required fields
+                if (!formData.firstName || !formData.lastName || !formData.email || 
+                    !formData.phone || !formData.preferredStartDate || !formData.preferredTime || 
+                    !formData.experienceLevel) {
+                    showErrorMessage('Missing Information', 'Please fill in all required fields');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    return;
+                }
+                
+                console.log('Sending request to:', `${API_BASE_URL}/free-trial`);
+                
+                const response = await fetch(`${API_BASE_URL}/free-trial`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                console.log('Response Status:', response.status);
+                const result = await response.json();
+                console.log('Response Data:', result);
+                
+                if (response.ok && result.success) {
+                    // Success with beautiful modal!
+                    showSuccessMessage(
+                        '🎉 Free Trial Confirmed!',
+                        `${result.message}<br><br>` +
+                        `<strong style="color: var(--color-accent);">Start Date:</strong> ${formData.preferredStartDate}<br>` +
+                        `<strong style="color: var(--color-accent);">Time:</strong> ${formData.preferredTime}<br><br>` +
+                        `We've sent you a confirmation email with all the details and next steps. ` +
+                        `Get ready to transform your fitness journey at CrossBox! 💪`
+                    );
+                    
+                    // Reset form
+                    freeTrialForm.reset();
+                    
+                    // Close modal after 2 seconds
+                    setTimeout(() => {
+                        closeFreeTrialModal();
+                    }, 2000);
+                } else {
+                    // Error from server
+                    showErrorMessage('Oops!', result.message || 'Failed to submit free trial request. Please try again.');
+                }
+                
+            } catch (error) {
+                console.error('Free Trial Submission Error:', error);
+                showErrorMessage(
+                    'Connection Error',
+                    'Unable to submit your free trial request. Please check:<br><br>' +
+                    '• Backend server is running<br>' +
+                    '• Internet connection is stable<br>' +
+                    '• API URL is correct'
+                );
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+    }
+});
+
+// ==================== BOOK VISIT MODAL ====================
+
+// Open Book Visit Modal
+function openBookVisitModal() {
+    const modal = document.getElementById('bookVisitModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Set minimum date to today
+    const dateInput = document.getElementById('visitDate');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+}
+
+// Close Book Visit Modal
+function closeBookVisitModal() {
+    const modal = document.getElementById('bookVisitModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Book Visit Form Submission
+document.addEventListener('DOMContentLoaded', function() {
+    const bookVisitForm = document.getElementById('bookVisitForm');
+    
+    if (bookVisitForm) {
+        bookVisitForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('=== Book Visit Form Submission Started ===');
+            
+            // Show loading state
+            const submitBtn = bookVisitForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Booking...';
+            
+            try {
+                // Get form data using direct selectors
+                const formData = {
+                    firstName: document.querySelector('#bookVisitForm input[name="firstName"]').value.trim(),
+                    lastName: document.querySelector('#bookVisitForm input[name="lastName"]').value.trim(),
+                    email: document.querySelector('#bookVisitForm input[name="email"]').value.trim(),
+                    phone: document.querySelector('#bookVisitForm input[name="phone"]').value.trim(),
+                    visitDate: document.querySelector('#bookVisitForm input[name="visitDate"]').value,
+                    visitTime: document.querySelector('#bookVisitForm select[name="visitTime"]').value,
+                    numGuests: document.querySelector('#bookVisitForm select[name="numGuests"]').value,
+                    visitPurpose: document.querySelector('#bookVisitForm select[name="visitPurpose"]').value,
+                    specialRequests: document.querySelector('#bookVisitForm textarea[name="specialRequests"]').value.trim(),
+                    tourGuideNeeded: document.querySelector('#bookVisitForm input[name="tourGuideNeeded"]').checked
+                };
+                
+                // Collect interested areas (checkboxes)
+                const interestedCheckboxes = document.querySelectorAll('#bookVisitForm input[name="interestedIn"]:checked');
+                formData.interestedIn = Array.from(interestedCheckboxes).map(cb => cb.value);
+                
+                console.log('Form Data Collected:', formData);
+                
+                // Validate required fields
+                if (!formData.firstName || !formData.lastName || !formData.email || 
+                    !formData.phone || !formData.visitDate || !formData.visitTime || 
+                    !formData.visitPurpose) {
+                    showErrorMessage('Missing Information', 'Please fill in all required fields');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    return;
+                }
+                
+                console.log('Sending request to:', `${API_BASE_URL}/book-visit`);
+                
+                const response = await fetch(`${API_BASE_URL}/book-visit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                console.log('Response Status:', response.status);
+                const result = await response.json();
+                console.log('Response Data:', result);
+                
+                if (response.ok && result.success) {
+                    // Success with beautiful modal!
+                    let message = `${result.message}<br><br>`;
+                    message += `<strong style="color: var(--color-accent);">📅 Date:</strong> ${formData.visitDate}<br>`;
+                    message += `<strong style="color: var(--color-accent);">🕐 Time:</strong> ${formData.visitTime}<br>`;
+                    message += `<strong style="color: var(--color-accent);">👥 Guests:</strong> ${formData.numGuests}<br>`;
+                    message += `<strong style="color: var(--color-accent);">🎯 Purpose:</strong> ${formData.visitPurpose}<br><br>`;
+                    
+                    if (formData.tourGuideNeeded) {
+                        message += `✨ <strong>A dedicated tour guide will be waiting for you!</strong><br><br>`;
+                    }
+                    
+                    message += `We'll send you a confirmation email with directions and parking info.<br><br>`;
+                    message += `See you soon at CrossBox! 🏋️‍♂️`;
+                    
+                    showSuccessMessage('🎊 Visit Booking Confirmed!', message);
+                    
+                    // Reset form
+                    bookVisitForm.reset();
+                    
+                    // Close modal after 2 seconds
+                    setTimeout(() => {
+                        closeBookVisitModal();
+                    }, 2000);
+                } else {
+                    // Error from server
+                    showErrorMessage('Oops!', result.message || 'Failed to book visit. Please try again.');
+                }
+                
+            } catch (error) {
+                console.error('Book Visit Submission Error:', error);
+                showErrorMessage(
+                    'Connection Error',
+                    'Unable to book your visit. Please check:<br><br>' +
+                    '• Backend server is running<br>' +
+                    '• Internet connection is stable<br>' +
+                    '• API URL is correct'
+                );
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+    }
+});
+
+// ==================== CLOSE ON OUTSIDE CLICK ====================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Free Trial Modal
+    const freeTrialModal = document.getElementById('freeTrialModal');
+    if (freeTrialModal) {
+        freeTrialModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFreeTrialModal();
+            }
+        });
+    }
+    
+    // Book Visit Modal
+    const bookVisitModal = document.getElementById('bookVisitModal');
+    if (bookVisitModal) {
+        bookVisitModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBookVisitModal();
+            }
+        });
+    }
+});
+
+// ==================== CLOSE ON ESCAPE KEY ====================
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeFreeTrialModal();
+        closeBookVisitModal();
+    }
+});
+
+// ==================== AUTO-ATTACH TO BUTTONS ====================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Find and attach "START MY TRIAL" button
+    const startTrialButtons = document.querySelectorAll('button, .btn');
+    startTrialButtons.forEach(button => {
+        const buttonText = button.textContent.trim().toUpperCase();
+        if (buttonText.includes('START MY TRIAL') || buttonText.includes('START TRIAL')) {
+            button.setAttribute('onclick', 'openFreeTrialModal(); return false;');
+            console.log('✅ Attached Free Trial Modal to button:', button);
+        }
+    });
+    
+    // Find and attach "BOOK A VISIT" button
+    const bookVisitButtons = document.querySelectorAll('button, .btn');
+    bookVisitButtons.forEach(button => {
+        const buttonText = button.textContent.trim().toUpperCase();
+        if (buttonText.includes('BOOK A VISIT') || buttonText.includes('BOOK VISIT')) {
+            button.setAttribute('onclick', 'openBookVisitModal(); return false;');
+            console.log('✅ Attached Book Visit Modal to button:', button);
+        }
+    });
+});
