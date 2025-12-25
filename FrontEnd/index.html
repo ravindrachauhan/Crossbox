@@ -510,7 +510,6 @@
 
     <link rel="stylesheet" href="./css/chatbot.css">
 
-
   </head>
   <body>
     <link rel="stylesheet" href="./style.css" />
@@ -1201,14 +1200,14 @@
               </div>
             </article>
           </div>
-          <div class="featured-footer">
+            <div class="featured-footer">
             <p class="featured-footer-text">
-              <span>Need help choosing? Tap</span>
-              <span class="home-text15">Find My Fit</span>
-              <span>to get a recommended class based on your goals.</span>
+                <span>Need help choosing? Tap</span>
+                <span class="home-text15">Find My Fit</span>
+                <span>to get a recommended class based on your goals.</span>
             </p>
-            <button class="btn btn-outline">Find My Fit</button>
-          </div>
+            <button class="btn btn-outline" onclick="findMyFitModal.open()">Find My Fit</button>
+        </div>
         </section>
         <section
           id="cta-contact"
@@ -3744,6 +3743,72 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="./css/findMyFit.css">
+
+<script src="./js/findMyFit.js"></script>
+
+<script>
+// Emergency backup initialization - ensures findMyFitModal exists
+console.log('🔍 Checking Find My Fit Modal...');
+
+// Wait a moment for findMyFit.js to load
+setTimeout(function() {
+    if (typeof findMyFitModal === 'undefined' || !findMyFitModal) {
+        console.error('❌ findMyFitModal not initialized! Creating now...');
+        
+        // Create the modal class inline as backup
+        window.findMyFitModal = {
+            open: function() {
+                console.log('📂 Opening Find My Fit Modal (backup method)');
+                const modal = document.getElementById('findMyFitModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    console.log('✅ Modal opened successfully!');
+                } else {
+                    console.error('❌ Modal element not found!');
+                    alert('Modal system error. Please refresh the page.');
+                }
+            },
+            close: function() {
+                const modal = document.getElementById('findMyFitModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            }
+        };
+    } else {
+        console.log('✅ findMyFitModal is ready!', findMyFitModal);
+    }
+    
+    // Test if the button exists
+    const findMyFitButtons = document.querySelectorAll('button');
+    let foundButton = false;
+    findMyFitButtons.forEach(btn => {
+        if (btn.textContent.includes('Find My Fit')) {
+            foundButton = true;
+            console.log('✅ Find My Fit button found:', btn);
+        }
+    });
+    
+    if (!foundButton) {
+        console.warn('⚠️ No Find My Fit button found on page');
+    }
+}, 100);
+
+// Also add a global click handler as backup
+document.addEventListener('click', function(e) {
+    const button = e.target.closest('button');
+    if (button && button.textContent.includes('Find My Fit')) {
+        e.preventDefault();
+        console.log('🔘 Find My Fit button clicked (via event listener)');
+        if (window.findMyFitModal && window.findMyFitModal.open) {
+            window.findMyFitModal.open();
+        }
+    }
+});
+</script>
 
 </body>
 

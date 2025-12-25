@@ -1581,4 +1581,214 @@ router.delete('/facility-visits/:id', async (req, res) => {
     }
 })
 
+// ==================== FIND MY FIT API ====================
+
+// Match reason generator (place this BEFORE the route)
+function generateMatchReason(goal, intensity, experience) {
+    const reasons = {
+        weight_loss: 'Burns maximum calories and boosts metabolism',
+        muscle_gain: 'Focuses on strength building and muscle development',
+        endurance: 'Builds cardiovascular stamina and aerobic capacity',
+        flexibility: 'Improves range of motion and body awareness',
+        general_fitness: 'Provides balanced, full-body conditioning'
+    };
+
+    const experienceMod = {
+        beginner: ', with modifications for newcomers',
+        intermediate: ', perfect for your fitness level',
+        advanced: ', challenging enough for experienced athletes'
+    };
+
+    return reasons[goal] + experienceMod[experience];
+}
+
+// Class matching rules (place this BEFORE the route)
+const classMatchingRules = {
+    weight_loss: {
+        high: ['Crossfit', 'HIIT', 'Cardio Blast', 'Boot Camp'],
+        moderate: ['Circuit Training', 'Cardio Dance', 'Boxing'],
+        low: ['Walking Club', 'Aqua Aerobics']
+    },
+    muscle_gain: {
+        high: ['Crossfit', 'Powerlifting', 'Strength Training'],
+        moderate: ['Functional Training', 'Kettlebell'],
+        low: ['Resistance Band Training']
+    },
+    endurance: {
+        high: ['Crossfit', 'Running Club', 'Cycling'],
+        moderate: ['Rowing', 'Swim Training'],
+        low: ['Walking', 'Light Cardio']
+    },
+    flexibility: {
+        high: ['Advanced Yoga', 'Gymnastics'],
+        moderate: ['Zen Core', 'Pilates', 'Yoga'],
+        low: ['Gentle Stretch', 'Mobility Flow']
+    },
+    general_fitness: {
+        high: ['Crossfit', 'HIIT'],
+        moderate: ['Group Fitness', 'Athletic Conditioning'],
+        low: ['General Wellness', 'Active Recovery']
+    }
+};
+
+// POST - Submit Find My Fit Form
+router.post('/find-my-fit', async (req, res) => {
+    const { goal, experience, intensity, duration, health_notes, name, email, phone, contact_trainer } = req.body;
+
+    console.log('📥 Received Find My Fit submission:', req.body);
+
+    try {
+        // 1. Save user submission to database
+        const [submissionResult] = await db.query(
+            `INSERT INTO find_my_fit_submissions 
+            (name, email, phone, goal, experience, intensity, duration, health_notes, contact_trainer) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [name, email, phone, goal, experience, intensity, parseInt(duration), health_notes || null, contact_trainer || false]
+        );
+
+        const submissionId = submissionResult.insertId;
+        console.log('✅ Submission saved with ID:', submissionId);
+
+        // 2. Get matching classes based on goal and intensity
+        const matchingClassNames = classMatchingRules[goal]?.[intensity] || [];
+        
+        console.log('🔍 Looking for classes:', matchingClassNames);
+
+        let recommendations = [];
+
+        if (matchingClassNames.length === 0) {
+            console.log('⚠️ No matching rules, fetching any available classes...');
+            // Fallback: get any classes
+            const [allClasses] = await db.query(
+                `SELECT * FROM classes WHERE duration >= ? LIMIT 3`,
+                [parseInt(duration)]
+            );
+
+            recommendations = allClasses.map(cls => ({
+                ...cls,
+                match_reason: 'Great option for your fitness journey'
+            }));
+        } else {
+            // 3. Fetch matching classes from database
+            const placeholders = matchingClassNames.map(() => '?').join(',');
+            
+            console.log('📊 SQL Query:', `SELECT c.*, t.trainerName as trainer_name FROM classes c LEFT JOIN trainer t ON c.trainer_id = t.trainerId WHERE c.class_name IN (${placeholders}) AND c.duration >= ?`);
+            console.log('📊 Parameters:', [...matchingClassNames, parseInt(duration), experience]);
+
+            // FIXED: Removed t.email which doesn't exist
+            const [classes] = await db.query(
+                `SELECT c.*, t.trainerName as trainer_name
+                FROM classes c
+                LEFT JOIN trainer t ON c.trainer_id = t.trainerId
+                WHERE c.class_name IN (${placeholders}) AND c.duration >= ?
+                ORDER BY 
+                    CASE 
+                        WHEN c.difficulty = ? THEN 1 
+                        ELSE 2 
+                    END,
+                    c.duration ASC
+                LIMIT 3`,
+                [...matchingClassNames, parseInt(duration), experience]
+            );
+
+            console.log('✅ Found classes:', classes.length);
+
+            // 4. Add match reasons
+            recommendations = classes.map(cls => ({
+                ...cls,
+                match_reason: generateMatchReason(goal, intensity, experience)
+            }));
+        }
+
+        // 5. If user wants trainer contact, notify trainers
+        if (contact_trainer && recommendations.length > 0) {
+            console.log(`📧 Notify trainers for user: ${name} (${email})`);
+        }
+
+        // 6. Log recommendations to database
+        for (const rec of recommendations) {
+            if (rec.class_id) {
+                try {
+                    await db.query(
+                        `INSERT INTO find_my_fit_recommendations (submission_id, class_id) VALUES (?, ?)`,
+                        [submissionId, rec.class_id]
+                    );
+                } catch (err) {
+                    console.warn('Could not save recommendation:', err.message);
+                }
+            }
+        }
+
+        console.log('🎉 Sending response with', recommendations.length, 'recommendations');
+
+        res.json({
+            success: true,
+            recommendations,
+            userSubmission: { name, email, phone, submissionId }
+        });
+
+    } catch (error) {
+        console.error('❌ Find My Fit Error:', error);
+        console.error('Error details:', {
+            message: error.message,
+            code: error.code,
+            sql: error.sql
+        });
+        
+        res.status(500).json({
+            success: false,
+            message: 'Error processing your request',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get all Find My Fit submissions
+router.get('/find-my-fit/submissions', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM find_my_fit_submissions ORDER BY created_at DESC'
+        );
+        res.json({
+            success: true,
+            count: rows.length,
+            data: rows
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching submissions',
+            error: error.message
+        });
+    }
+});
+
+// GET - Get Find My Fit submission by ID
+router.get('/find-my-fit/submissions/:id', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM find_my_fit_submissions WHERE submission_id = ?',
+            [req.params.id]
+        );
+        
+        if (rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Submission not found'
+            });
+        }
+        
+        res.json({
+            success: true,
+            data: rows[0]
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching submission',
+            error: error.message
+        });
+    }
+});
+
 module.exports = router;
