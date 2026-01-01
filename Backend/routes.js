@@ -281,20 +281,23 @@ router.get('/trainers/status/:status', async (req, res) => {
 router.post('/trainers', async (req, res) => {
     try {
         const { 
-            trainerName, 
-            email, 
-            phone, 
+            trainercode,
+            trainername, 
+            traineremail, 
+            trainerphonenumber, 
             specialisation, 
-            experience, 
-            bio, 
+            experienceyears, 
+            certification, 
             isActive, 
             created_by 
         } = req.body;
         
         const [result] = await db.query(
-            `INSERT INTO trainer (trainerName, email, phone, specialisation, experience, bio, isActive, created_by, modified_by) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [trainerName, email, phone, specialisation, experience, bio, isActive, created_by, created_by]
+            `INSERT INTO trainer (trainercode, trainername, traineremail, trainerphonenumber, 
+             specialisation, experienceyears, certification, isActive, created_by, modified_by) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [trainercode, trainername, traineremail, trainerphonenumber, specialisation, 
+             experienceyears, certification, isActive, created_by, created_by]
         );
         
         res.status(201).json({
@@ -315,20 +318,24 @@ router.post('/trainers', async (req, res) => {
 router.put('/trainers/:id', async (req, res) => {
     try {
         const { 
-            trainerName, 
-            email, 
-            phone, 
+            trainercode,
+            trainername, 
+            traineremail, 
+            trainerphonenumber, 
             specialisation, 
-            experience, 
-            bio, 
+            experienceyears, 
+            certification, 
             isActive, 
             modified_by 
         } = req.body;
         
         const [result] = await db.query(
-            `UPDATE trainer SET trainerName = ?, email = ?, phone = ?, specialisation = ?, experience = ?, 
-             bio = ?, isActive = ?, modified_by = ?, modified_on = CURRENT_TIMESTAMP WHERE trainerId = ?`,
-            [trainerName, email, phone, specialisation, experience, bio, isActive, modified_by, req.params.id]
+            `UPDATE trainer SET trainercode = ?, trainername = ?, traineremail = ?, 
+             trainerphonenumber = ?, specialisation = ?, experienceyears = ?, 
+             certification = ?, isActive = ?, modified_by = ?, modified_on = CURRENT_TIMESTAMP 
+             WHERE trainerId = ?`,
+            [trainercode, trainername, traineremail, trainerphonenumber, specialisation, 
+             experienceyears, certification, isActive, modified_by, req.params.id]
         );
         
         if (result.affectedRows === 0) {
@@ -1786,6 +1793,474 @@ router.get('/find-my-fit/submissions/:id', async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error fetching submission',
+            error: error.message
+        });
+    }
+});
+
+// ==================== ADMIN AUTHENTICATION APIs ====================
+// POST - Admin Login
+router.post('/admin/login', async (req, res) => {
+    try {
+        const { email, password, role } = req.body;
+
+        console.log('📝 Login attempt:', { email, role });
+
+        // Validate input
+        if (!email || !password || !role) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide email, password, and role'
+            });
+        }
+
+        // Admin login (hardcoded for demo - you can create an admin table later)
+        if (role === 'admin') {
+            if (email === 'admin@crossbox.com' && password === 'admin123') {
+                console.log('✅ Admin login successful');
+                return res.json({
+                    success: true,
+                    message: 'Admin login successful',
+                    user: {
+                        id: 1,
+                        email: email,
+                        role: 'admin',
+                        name: 'Admin'
+                    }
+                });
+            } else {
+                console.log('❌ Invalid admin credentials');
+                return res.status(401).json({
+                    success: false,
+                    message: 'Invalid admin credentials'
+                });
+            }
+        } 
+        
+        // Trainer login
+        else if (role === 'trainer') {
+            const [trainers] = await db.query(
+                'SELECT * FROM trainer WHERE email = ? AND isActive = 1',
+                [email]
+            );
+            
+            if (trainers.length > 0) {
+                // In production, verify hashed password here
+                console.log('✅ Trainer login successful');
+                return res.json({
+                    success: true,
+                    message: 'Trainer login successful',
+                    user: {
+                        id: trainers[0].trainerId,
+                        email: trainers[0].email,
+                        role: 'trainer',
+                        name: trainers[0].trainerName
+                    }
+                });
+            } else {
+                console.log('❌ Trainer not found or inactive');
+                return res.status(401).json({
+                    success: false,
+                    message: 'Invalid trainer credentials or account is inactive'
+                });
+            }
+        } 
+        
+        // Member login
+        else if (role === 'member') {
+            const [members] = await db.query(
+                'SELECT * FROM users WHERE email = ? AND isActive = 1',
+                [email]
+            );
+            
+            if (members.length > 0) {
+                // In production, verify hashed password here
+                console.log('✅ Member login successful');
+                return res.json({
+                    success: true,
+                    message: 'Member login successful',
+                    user: {
+                        id: members[0].user_id,
+                        email: members[0].email,
+                        role: 'member',
+                        name: members[0].user_name
+                    }
+                });
+            } else {
+                console.log('❌ Member not found or inactive');
+                return res.status(401).json({
+                    success: false,
+                    message: 'Invalid member credentials or account is inactive'
+                });
+            }
+        }
+
+        // Invalid role
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid role selected'
+        });
+
+    } catch (error) {
+        console.error('❌ Login Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error during login: ' + error.message,
+            error: error.message
+        });
+    }
+});
+
+// ==================== ADMIN DASHBOARD APIs ====================
+
+// GET - Dashboard Statistics
+router.get('/admin/dashboard-stats', async (req, res) => {
+    try {
+        console.log('📊 Fetching dashboard stats...');
+
+        // Get total and active members
+        const [memberStats] = await db.query(
+            'SELECT COUNT(*) as total, SUM(CASE WHEN isActive = 1 THEN 1 ELSE 0 END) as active FROM users'
+        );
+
+        // Get total and active trainers
+        const [trainerStats] = await db.query(
+            'SELECT COUNT(*) as total, SUM(CASE WHEN isActive = 1 THEN 1 ELSE 0 END) as active FROM trainer'
+        );
+
+        // Get total classes
+        const [classStats] = await db.query(
+            'SELECT COUNT(*) as total FROM classes'
+        );
+
+        // Get recent bookings count (last 7 days)
+        const [bookingStats] = await db.query(
+            `SELECT COUNT(*) as recent FROM bookings 
+             WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND isDeleted = 0`
+        );
+
+        console.log('✅ Stats fetched successfully');
+
+        res.json({
+            success: true,
+            stats: {
+                members: {
+                    total: memberStats[0].total || 0,
+                    active: memberStats[0].active || 0
+                },
+                trainers: {
+                    total: trainerStats[0].total || 0,
+                    active: trainerStats[0].active || 0
+                },
+                classes: {
+                    total: classStats[0].total || 0
+                },
+                bookings: {
+                    recent: bookingStats[0].recent || 0
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error('❌ Dashboard Stats Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching dashboard statistics',
+            error: error.message
+        });
+    }
+});
+
+// GET - All Members with Details
+router.get('/admin/members', async (req, res) => {
+    try {
+        console.log('👥 Fetching all members...');
+
+        const [members] = await db.query(`
+            SELECT 
+                u.*,
+                t.trainerName as trainer_name
+            FROM users u
+            LEFT JOIN trainer t ON u.trainer_id = t.trainerId
+            ORDER BY u.created_on DESC
+        `);
+
+        console.log(`✅ Fetched ${members.length} members`);
+
+        res.json({
+            success: true,
+            count: members.length,
+            data: members
+        });
+    } catch (error) {
+        console.error('❌ Error fetching members:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching members',
+            error: error.message
+        });
+    }
+});
+
+// GET - All Trainers with Details
+router.get('/admin/trainers', async (req, res) => {
+    try {
+        console.log('💪 Fetching all trainers...');
+
+        const [trainers] = await db.query(`
+            SELECT 
+                t.trainerId,
+                t.trainercode,
+                t.trainername as trainerName,
+                t.traineremail as email,
+                t.trainerphonenumber as phone,
+                t.specialisation,
+                t.experienceyears as experience,
+                t.certification as bio,
+                t.isActive,
+                t.created_on,
+                t.modified_on,
+                COUNT(DISTINCT u.user_id) as member_count
+            FROM trainer t
+            LEFT JOIN users u ON t.trainerId = u.trainer_id
+            GROUP BY t.trainerId, t.trainercode, t.trainername, t.traineremail, 
+                     t.trainerphonenumber, t.specialisation, t.experienceyears, 
+                     t.certification, t.isActive, t.created_on, t.modified_on
+            ORDER BY t.created_on DESC
+        `);
+
+        console.log(`✅ Fetched ${trainers.length} trainers`);
+        
+        res.json({
+            success: true,
+            count: trainers.length,
+            data: trainers
+        });
+    } catch (error) {
+        console.error('❌ Error fetching trainers:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching trainers',
+            error: error.message
+        });
+    }
+});
+
+// GET - All Classes with Details
+router.get('/admin/classes', async (req, res) => {
+    try {
+        console.log('📚 Fetching all classes...');
+
+        const [classes] = await db.query(`
+            SELECT 
+                c.class_id,
+                c.class_desc as class_name,
+                c.difficulty,
+                c.duration,
+                c.intensity,
+                c.trainer_id,
+                t.trainername as trainer_name,
+                COUNT(DISTINCT e.enrollment_id) as enrolled_count
+            FROM classes c
+            LEFT JOIN trainer t ON c.trainer_id = t.trainerId
+            LEFT JOIN enrollments e ON c.class_desc COLLATE utf8mb4_unicode_ci = e.class_name COLLATE utf8mb4_unicode_ci
+            GROUP BY c.class_id, c.class_desc, c.difficulty, c.duration, 
+                     c.intensity, c.trainer_id, t.trainername
+            ORDER BY c.class_desc
+        `);
+
+        console.log(`✅ Fetched ${classes.length} classes`);
+        if (classes.length > 0) {
+            console.log('Sample class:', classes[0]);
+        }
+
+        res.json({
+            success: true,
+            count: classes.length,
+            data: classes
+        });
+    } catch (error) {
+        console.error('❌ Error fetching classes:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching classes',
+            error: error.message
+        });
+    }
+});
+
+// GET - Recent Activity
+router.get('/admin/recent-activity', async (req, res) => {
+    try {
+        console.log('📋 Fetching recent activity...');
+
+        // Get recent bookings
+        const [bookings] = await db.query(`
+            SELECT 'booking' as type, booking_id as id, full_name as name, 
+                   class_name, booking_date as date, created_at
+            FROM bookings 
+            WHERE isDeleted = 0 
+            ORDER BY created_at DESC 
+            LIMIT 5
+        `);
+
+        // Get recent enrollments
+        const [enrollments] = await db.query(`
+            SELECT 'enrollment' as type, enrollment_id as id, full_name as name,
+                   class_name, start_date as date, created_at
+            FROM enrollments
+            ORDER BY created_at DESC
+            LIMIT 5
+        `);
+
+        // Get recent trial requests
+        const [trials] = await db.query(`
+            SELECT 'trial' as type, trial_id as id, 
+                   CONCAT(first_name, ' ', last_name) as name,
+                   preferred_start_date as date, created_at
+            FROM free_trials
+            WHERE isDeleted = 0
+            ORDER BY created_at DESC
+            LIMIT 5
+        `);
+
+        // Get recent facility visits
+        const [visits] = await db.query(`
+            SELECT 'visit' as type, visit_id as id,
+                   CONCAT(first_name, ' ', last_name) as name,
+                   visit_date as date, created_at
+            FROM facility_visits
+            WHERE isDeleted = 0
+            ORDER BY created_at DESC
+            LIMIT 5
+        `);
+
+        // Combine and sort all activities
+        const allActivities = [...bookings, ...enrollments, ...trials, ...visits]
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(0, 10);
+
+        console.log(`✅ Fetched ${allActivities.length} activities`);
+
+        res.json({
+            success: true,
+            data: allActivities
+        });
+
+    } catch (error) {
+        console.error('❌ Error fetching recent activity:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching recent activity',
+            error: error.message
+        });
+    }
+});
+
+// PUT - Toggle User Status (Enable/Disable)
+router.put('/admin/toggle-user/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        
+        console.log(`🔄 Toggling user ${userId} status...`);
+
+        // Get current status
+        const [user] = await db.query('SELECT isActive FROM users WHERE user_id = ?', [userId]);
+        
+        if (user.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // Toggle status
+        const newStatus = user[0].isActive === 1 ? 0 : 1;
+        
+        await db.query(
+            'UPDATE users SET isActive = ?, modified_on = NOW() WHERE user_id = ?',
+            [newStatus, userId]
+        );
+
+        console.log(`✅ User ${userId} ${newStatus === 1 ? 'enabled' : 'disabled'}`);
+
+        res.json({
+            success: true,
+            message: `User ${newStatus === 1 ? 'enabled' : 'disabled'} successfully`,
+            isActive: newStatus
+        });
+
+    } catch (error) {
+        console.error('❌ Error toggling user status:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error toggling user status',
+            error: error.message
+        });
+    }
+});
+
+// PUT - Toggle Trainer Status (Enable/Disable)
+router.put('/admin/toggle-trainer/:id', async (req, res) => {
+    try {
+        const trainerId = req.params.id;
+        
+        console.log(`🔄 Toggling trainer ${trainerId} status...`);
+
+        // Get current status
+        const [trainer] = await db.query('SELECT isActive FROM trainer WHERE trainerId = ?', [trainerId]);
+        
+        if (trainer.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Trainer not found'
+            });
+        }
+
+        // Toggle status
+        const newStatus = trainer[0].isActive === 1 ? 0 : 1;
+        
+        await db.query(
+            'UPDATE trainer SET isActive = ?, modified_on = NOW() WHERE trainerId = ?',
+            [newStatus, trainerId]
+        );
+
+        console.log(`✅ Trainer ${trainerId} ${newStatus === 1 ? 'enabled' : 'disabled'}`);
+
+        res.json({
+            success: true,
+            message: `Trainer ${newStatus === 1 ? 'enabled' : 'disabled'} successfully`,
+            isActive: newStatus
+        });
+
+    } catch (error) {
+        console.error('❌ Error toggling trainer status:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error toggling trainer status',
+            error: error.message
+        });
+    }
+});
+
+// GET - New Members (Last 30 days)
+router.get('/admin/new-members', async (req, res) => {
+    try {
+        const [members] = await db.query(`
+            SELECT * FROM users 
+            WHERE created_on >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+            ORDER BY created_on DESC
+        `);
+
+        res.json({
+            success: true,
+            count: members.length,
+            data: members
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching new members',
             error: error.message
         });
     }
