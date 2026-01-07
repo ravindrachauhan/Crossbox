@@ -1,0 +1,120 @@
+/* ========================================
+   QUICK FIX: GREEN THEME CSS
+   Copy this ENTIRE section and paste it at the TOP of your style.css file
+   This will override all orange colors
+   ======================================== */
+
+:root {
+  /* 🟢 GREEN THEME - PRIMARY COLORS */
+  --color-primary: #278f15 !important;      /* Neon Green */
+  --color-secondary: #10853b !important;    /* Bright Green */
+  --color-accent: #619929 !important;       /* Chartreuse Green */
+  
+  /* Supporting green shades */
+  --color-accent-10: #1a3300 !important;
+  --color-accent-90: #5e8b2b !important;
+  --color-primary-10: #0d3300 !important;
+  --color-primary-90: #30910f !important;
+  
+  /* Theme colors for components */
+  --dl-color-theme-primary1: #1a640d !important;    
+  --dl-color-theme-primary2: #4f831b !important;
+  --dl-color-theme-accent2: #D1F5B0 !important;
+  --dl-color-theme-secondary2: #EBFBf1 !important;
+  
+  /* Background colors - keep as is */
+  --color-surface: #0e1113;
+  --color-surface-elevated: #181a1c;
+  --color-on-surface: #f2f7f9;
+  --color-on-surface-secondary: #c1c8cf;
+  --color-on-primary: #0e1113;
+}
+
+/* Force green on all primary buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #59af4a 0%, #459b45 100%) !important;
+  border-color: #3aa727 !important;
+  color: #000 !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #327426 0%, #37c037 100%) !important;
+}
+
+/* Navigation green theme */
+.navigation-logo-icon {
+  color: #338824 !important;
+}
+
+.navigation-cta-button {
+  background: linear-gradient(135deg, #468b3a 0%, #4ecc4e 100%) !important;
+  border-color: #2ecc11 !important;
+  color: #000 !important;
+}
+
+/* Modal headers green */
+.modal-header {
+  background: linear-gradient(135deg, #4ea53f 0%, #42b342 100%) !important;
+}
+
+/* Hero section accents */
+.hero-title-accent {
+  background: linear-gradient(135deg, #76c22b, #1bd760) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Buttons and CTAs */
+.btn-accent {
+  background: #6fa738 !important;
+  border-color: #6ca335 !important;
+  color: #000 !important;
+}
+
+/* Featured badges */
+.featured-badge {
+  background: #7dc931 !important;
+  color: #000 !important;
+}
+
+/* Session tags */
+.intensity-high {
+  border-color: #85c744 !important;
+  background: rgba(127, 255, 0, 0.2) !important;
+}
+
+/* Coach tags */
+.coach-tag {
+  border-color: #478a3b !important;
+  background: rgba(57, 255, 20, 0.15) !important;
+}
+
+/* Footer accents */
+.footer-logo-icon {
+  background: linear-gradient(135deg, #497a40, #7abb3a) !important;
+}
+
+/* Testimonial accents */
+.testimonial-author {
+  color: #67a32a !important;
+}
+
+/* Utility accents */
+.utility-badge {
+  background: #5c9423 !important;
+  color: #000 !important;
+}
+
+/* All primary elements gradient */
+.cta-panel {
+  border-color: #45a135 !important;
+}
+
+/* Section titles with green glow */
+.section-title {
+  text-shadow: 0 6px 18px rgba(57, 255, 20, 0.12) !important;
+}
+
+/* ========================================
+   END OF GREEN THEME OVERRIDE
+   ======================================== */

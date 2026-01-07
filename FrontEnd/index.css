@@ -125,19 +125,20 @@
 }
  
 .home-hero-card-image1 {
-  background-image: url('https://images.pexels.com/photos/8436731/pexels-photo-8436731.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+  background-image: url('./images/crossfit.jpg');
 }
  
 .home-hero-card-image2 {
-  background-image: url('https://images.pexels.com/photos/7596975/pexels-photo-7596975.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+  background-image: url('./images/cardio.jpg');
 }
  
 .home-hero-card-image3 {
-  background-image: url('https://images.pexels.com/photos/9944849/pexels-photo-9944849.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+  background-image: url('./images/boxing.jpg');
 }
  
 .home-featured-card-image1 {
   background-image: url('https://images.pexels.com/photos/6455791/pexels-photo-6455791.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+  background-image: url('./images/crossfit2.jpeg');
 }
  
 .home-featured-card-image2 {
@@ -165,15 +166,15 @@
 }
  
 .home-hero-img1 {
-  background-image: url('https://images.pexels.com/photos/6046978/pexels-photo-6046978.png?auto=compress&cs=tinysrgb&h=650&w=940');
+   background-image: url('./images/trainingfloor.jpeg');
 }
  
 .home-hero-img2 {
-  background-image: url('https://images.pexels.com/photos/5383994/pexels-photo-5383994.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+   background-image: url('./images/boxingring.jpeg');
 }
  
 .home-hero-img3 {
-  background-image: url('https://images.pexels.com/photos/3888345/pexels-photo-3888345.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+   background-image: url('./images/deadlift.jpeg');
 }
  
 .home-tile-image1 {
@@ -181,7 +182,7 @@
 }
  
 .home-tile-image2 {
-  background-image: url('https://images.pexels.com/photos/5407033/pexels-photo-5407033.jpeg?auto=compress&cs=tinysrgb&h=650&w=940');
+  background-image: url('./images/amenities.jpeg');
 }
  
 .home-tile-image3 {
