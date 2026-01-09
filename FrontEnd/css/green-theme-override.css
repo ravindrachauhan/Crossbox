@@ -116,5 +116,233 @@
 }
 
 /* ========================================
+   CROSSBOX - COMPLETE GREEN OVERLAY REMOVAL
+   All Sections: Hero Video + Featured Classes
+   ======================================== */
+
+/* ==========================================
+   SECTION 1: HERO VIDEO BACKGROUND
+   Remove green overlay from hero section
+   ========================================== */
+
+/* Replace green overlay with neutral dark gradient */
+.hero-overlay {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    ) !important;
+}
+
+/* Remove any filters from the video */
+.hero-video {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Ensure hero text remains readable */
+.hero-title {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+.hero-subtitle {
+    color: #ffffff !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Adjust hero cards background for visibility */
+.hero-card {
+    background: rgba(26, 26, 26, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+/* Hero contact items */
+.hero-contact-item {
+    background: rgba(26, 26, 26, 0.8) !important;
+    backdrop-filter: blur(10px) !important;
+    border-color: rgba(57, 255, 20, 0.4) !important;
+}
+
+
+/* ==========================================
+   SECTION 2: FEATURED CLASSES CARDS
+   Remove green overlay from images
+   ========================================== */
+
+/* Replace green overlay with neutral dark gradient */
+.featured-card-overlay {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.35) 40%,
+        transparent 70%
+    ) !important;
+}
+
+/* Remove color filters from featured class images */
+.featured-card-image {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Adjust content area gradient for text readability */
+.featured-card-content {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.85) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/* Different gradients for different card sizes */
+.featured-lead .featured-card-content {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+    ) !important;
+}
+
+.featured-support .featured-card-content,
+.featured-compact .featured-card-content {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.85) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/* Keep featured class text readable */
+.featured-card-title,
+.featured-card-meta,
+.featured-card-description {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Ensure badge remains visible */
+.featured-badge {
+    background: #ff006e !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+
+/* ==========================================
+   SECTION 3: HORIZONTAL BUTTON FIX
+   Fix button sizing issues
+   ========================================== */
+
+/* Override large button styles for Featured Classes section */
+.featured-classes-section .btn-primary.btn-sm,
+.featured-classes-section .btn-accent.btn-sm,
+.featured-card-content .btn-sm {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    min-width: auto !important;
+    width: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure Quick Enroll buttons are horizontal */
+.featured-card-content .btn {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    width: auto !important;
+    max-width: 150px !important;
+    min-width: 120px !important;
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+/* Specific fix for the lead featured card (Crossfit) */
+.featured-lead .featured-card-content .btn-primary.btn-sm {
+    padding: 10px 24px !important;
+    font-size: 14px !important;
+    width: auto !important;
+    display: inline-block !important;
+}
+
+/* Fix for support cards (Power Sculpt, Cycle Surge) */
+.featured-support .featured-card-content .btn-primary.btn-sm {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    width: auto !important;
+    display: inline-block !important;
+}
+
+/* Fix for compact cards (Yoga, MMA, Express Burn) */
+.featured-compact .featured-card-content .btn-sm.btn-accent {
+    padding: 8px 18px !important;
+    font-size: 13px !important;
+    width: auto !important;
+    min-width: 100px !important;
+    display: inline-block !important;
+    text-align: center !important;
+}
+
+/* Prevent vertical stretching */
+.featured-card-content button {
+    align-self: flex-start !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+}
+
+/* Additional safeguard for all featured section buttons */
+#featured-classes button.btn-sm {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    width: auto !important;
+    display: inline-block !important;
+    height: auto !important;
+}
+
+/* Remove flex-grow that might be stretching buttons */
+.featured-classes-section button {
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Ensure button text doesn't wrap */
+.featured-classes-section button span {
+    display: inline !important;
+    white-space: nowrap !important;
+}
+
+/* Fix the "Find My Fit" button */
+.featured-footer .btn-outline {
+    padding: 12px 24px !important;
+    font-size: 15px !important;
+    width: auto !important;
+    max-width: 200px !important;
+    display: inline-block !important;
+}
+
+
+/* ==========================================
+   SECTION 4: HERO SECTION BUTTONS
+   Ensure hero buttons are properly styled
+   ========================================== */
+
+/* Hero CTA buttons */
+.hero-cta-group .btn {
+    min-width: 200px !important;
+}
+
+#hero-cta-main,
+#hero-cta-secondary {
+    padding: 16px 32px !important;
+    font-size: 16px !important;
+}
+
+/* ========================================
    END OF GREEN THEME OVERRIDE
    ======================================== */
